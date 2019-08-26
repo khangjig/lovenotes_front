@@ -1,22 +1,16 @@
 import React, { Component } from 'react'
-import {
-  View
-} from 'react-native'
+import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
-import { Switch, Route } from 'react-router-native'
 import { requestGetUsers } from '../actions/DemoAction'
-import DemoContainer from './DemoContainer'
-import DemoContainer2 from './DemoContainer2'
 
 class MainContainer extends Component {
 
   render() {
     return (
       <View>
-        <Switch>
-          <Route exact path='/' component={DemoContainer} />
-          <Route exact path='/xyz' component={DemoContainer2} />
-        </Switch>
+        <Text>
+          temp
+        </Text>
       </View>
     )
   }

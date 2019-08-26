@@ -6,10 +6,6 @@ import {
 } from 'react-native'
 
 class DemoView2 extends Component {
-    
-    onClick = () => {
-        this.props.history.push('/')
-    }
     render() {
         return (
             <View>
@@ -18,7 +14,6 @@ class DemoView2 extends Component {
                 <Text>DemoContainer2</Text>
                 <Text>DemoContainer2</Text>
                 <Text>DemoContainer2</Text>
-                <Button title="Clicked" onPress={this.onClick} />
             </View>
         )
     }
