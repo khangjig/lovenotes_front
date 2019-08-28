@@ -3,6 +3,9 @@ import { connect } from 'react-redux'
 import { View, Text } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 
+import { LAUCHED, ACCESS_TOKEN_ASYNCSTORAGE, REFRESH_TOKEN_ASYNCSTORAGE } from '../configs/config'
+import SplashView from '../views/SplashView'
+
 class SplashContainer extends Component {
 
     constructor(props) {
@@ -14,12 +17,26 @@ class SplashContainer extends Component {
 
     async componentDidMount() {
         try {
-            const value = await AsyncStorage.getItem('@lauched')
-            if (value !== null) {
-                this.setState({ firstLaunch: false })
-                setTimeout(() => {
-                    this.props.navigation.navigate('Login')
-                }, 2000)
+            const allKeys = await AsyncStorage.getAllKeys()
+            console.log(allKeys)
+
+            const lauch = await AsyncStorage.getItem(LAUCHED)
+            const accessToken = await AsyncStorage.getItem(ACCESS_TOKEN_ASYNCSTORAGE)
+            const refreshToken = await AsyncStorage.getItem(REFRESH_TOKEN_ASYNCSTORAGE)
+            // await AsyncStorage.removeItem(ACCESS_TOKEN_ASYNCSTORAGE)
+            if (lauch !== null) {
+                if (accessToken !== null && refreshToken !== null) {
+                    this.setState({ firstLaunch: false })
+                    setTimeout(() => {
+                        this.props.navigation.navigate('App')
+                    }, 2000)
+                }
+                else {
+                    this.setState({ firstLaunch: false })
+                    setTimeout(() => {
+                        this.props.navigation.navigate('Login')
+                    }, 2000)
+                }
             }
             else {
                 this.setState({ firstLaunch: true })
@@ -37,13 +54,7 @@ class SplashContainer extends Component {
             return null
         } else {
             return (
-                <View>
-                    <Text>SplashContainer</Text>
-                    <Text>SplashContainer</Text>
-                    <Text>SplashContainer</Text>
-                    <Text>SplashContainer</Text>
-                    <Text>SplashContainer</Text>
-                </View>
+                <SplashView />
             )
         }
     }

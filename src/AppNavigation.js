@@ -4,7 +4,7 @@ import { Transition } from 'react-native-reanimated'
 import createAnimatedSwitchNavigator from 'react-navigation-animated-switch'
 
 import SplashContainer from './containers/SplashContainer'
-import GetStartedContainer from './containers/GetStartedContainer'
+import IntroductionContainer from './containers/IntroductionContainer'
 import SignInContainer from './containers/SignInContainer'
 import RegisterContainer from './containers/RegisterContainer'
 import DemoContainer from './containers/DemoContainer'
@@ -31,7 +31,7 @@ const SignInStack = createStackNavigator(
 const AppNavigation = createAnimatedSwitchNavigator(
     {
         SplashScreen: { screen: SplashContainer },
-        GetStatedScreen: { screen: GetStartedContainer },
+        GetStatedScreen: { screen: IntroductionContainer },
         Login: { screen: SignInStack },
         App: { screen: AppStack }
     },
