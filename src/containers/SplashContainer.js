@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Text } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 
 import { LAUCHED, ACCESS_TOKEN_ASYNCSTORAGE, REFRESH_TOKEN_ASYNCSTORAGE } from '../configs/config'
@@ -20,10 +19,12 @@ class SplashContainer extends Component {
             const allKeys = await AsyncStorage.getAllKeys()
             console.log(allKeys)
 
+            // await AsyncStorage.removeItem(ACCESS_TOKEN_ASYNCSTORAGE)
+            // await AsyncStorage.removeItem(REFRESH_TOKEN_ASYNCSTORAGE)
             const lauch = await AsyncStorage.getItem(LAUCHED)
             const accessToken = await AsyncStorage.getItem(ACCESS_TOKEN_ASYNCSTORAGE)
             const refreshToken = await AsyncStorage.getItem(REFRESH_TOKEN_ASYNCSTORAGE)
-            // await AsyncStorage.removeItem(ACCESS_TOKEN_ASYNCSTORAGE)
+            
             if (lauch !== null) {
                 if (accessToken !== null && refreshToken !== null) {
                     this.setState({ firstLaunch: false })

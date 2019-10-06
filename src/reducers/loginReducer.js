@@ -5,7 +5,8 @@ import {
 } from '../configs/ActionTypes'
 
 const initialState = {
-    isLoading: true
+    isLoading: true,
+    messages : null
 }
 
 const loginReducer = (state = initialState, action) => {
@@ -18,11 +19,13 @@ const loginReducer = (state = initialState, action) => {
         case LOGIN_REQUEST_SUCCESS:
             return {
                 ...state,
+                messages: action.payload,
                 isLoading: false
             }
         case LOGIN_REQUEST_FAIL:
             return {
                 ...state,
+                messages: action.payload,
                 isLoading: false
             }
         default:

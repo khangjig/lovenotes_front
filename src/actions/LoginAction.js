@@ -14,7 +14,7 @@ export function requestGetUsers(username, password) {
             type: LOGIN_REQUEST
         })
         return axios.request({
-            url: `http://10.0.2.2:3000/auth/token`,
+            url: `http://192.168.37.106:3000/auth/token`,
             method: 'post',
             data: {
                 email: username,
@@ -28,12 +28,14 @@ export function requestGetUsers(username, password) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken
 
             dispatch({
-                type: LOGIN_REQUEST_SUCCESS
+                type: LOGIN_REQUEST_SUCCESS,
+                payload: "Logged in successfully"
             })
 
         }).catch(err => {
             dispatch({
-                type: LOGIN_REQUEST_FAIL
+                type: LOGIN_REQUEST_FAIL,
+                payload: "The email or password is not correct"
             })
         })
     }
