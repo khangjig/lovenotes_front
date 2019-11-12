@@ -6,6 +6,7 @@ import {
 } from 'react-native'
 
 class ShowNoteView extends Component {
+    
     render() {
         return (
             <View>
