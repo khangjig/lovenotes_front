@@ -51,7 +51,8 @@ class SignInContainer extends Component {
                     {...this.state}
 
                     submitFrom={(username, password) => this.submitFrom(username, password)}
-                /></View>
+                />
+            </View>
         )
     }
 }

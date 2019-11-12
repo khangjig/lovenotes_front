@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
-import AppContainer from './src/AppNavigation'
+import AppContainer from './src/navigations/AppNavigation'
 import store from './src/store'
 
 class App extends Component {

@@ -1,22 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import DemoView2 from '../views/DemoView2'
+import OnThisDayView from '../views/OnThisDay'
 
-class DemoContainer2 extends Component {
-    
-    onClick = () => {
-        this.props.history.push('/')
-    }
+class OnThisDayContainer extends Component {
 
     render() {
         return (
-            <DemoView2
+            <OnThisDayView
                 {...this.props}
                 {...this.state}
             />
         )
     }
 }
+
 const mapStateToProps = state => {
     return ({
 
@@ -27,4 +24,4 @@ const mapDispatchToProps = dispatch => ({
 
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(DemoContainer2)
+export default connect(mapStateToProps, mapDispatchToProps)(OnThisDayContainer)

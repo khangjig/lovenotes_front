@@ -1,22 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import DemoView from '../views/DemoView'
+import NoteWrittingView from '../views/NoteWrittingView'
 
-class DemoContainer extends Component {
-
-  onClick = () => {
-    this.props.history.push('/xyz/')
-  }
+class NoteWrittingContainer extends Component {
 
   render() {
     return (
-      <DemoView
+      <NoteWrittingView
         {...this.props}
         {...this.state}
       />
     )
   }
 }
+
 const mapStateToProps = state => {
   return ({
 
@@ -27,4 +24,4 @@ const mapDispatchToProps = dispatch => ({
 
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(DemoContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(NoteWrittingContainer)
