@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Icon } from 'native-base'
 
 import ShowNoteView from '../views/ShowNoteView'
-import { Fonts } from '../styles/App'
+import { Fonts, Colors } from '../styles/App'
 
 class ShowNoteContainer extends Component {
 
@@ -14,20 +14,20 @@ class ShowNoteContainer extends Component {
     return {
       title: params ? params.otherParam : 'My love - The Song we singed',
 
-      headerTintColor: '#ff4081',
+      headerTintColor: Colors.mainColor,
       headerStyle: {
         backgroundColor: 'white',
         shadowOpacity: 0,
         elevation: 0,
         borderBottomWidth: 0.7,
-        borderColor: '#ff4081',
+        borderColor: Colors.mainColor,
       },
       headerTitleStyle: {
         textAlign: 'center',
         flex: 1,
         fontFamily: Fonts.rixLoveFool,
         fontWeight: '300',
-        color: '#ff4081',
+        color: Colors.mainColor,
         fontWeight: undefined,
         fontSize: 25,
       },
@@ -40,7 +40,7 @@ class ShowNoteContainer extends Component {
             shadowColor: 0,
             elevation: 0,
         }}>
-        <Icon name="md-create" style={{ color: '#ff4081' }} />
+        <Icon name="md-create" style={{ color: Colors.mainColor }} />
       </TouchableOpacity>
     }
   }

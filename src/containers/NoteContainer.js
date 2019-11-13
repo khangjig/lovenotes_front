@@ -8,6 +8,7 @@ import NoteView from '../views/NoteView'
 
 
 class NoteContainer extends Component {
+  
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state
 
@@ -20,7 +21,7 @@ class NoteContainer extends Component {
           flex: 1,
           fontFamily: Fonts.rixLoveFool,
           fontWeight: '300',
-          color: '#ff4081',
+          color: Colors.mainColor,
           fontWeight: undefined,
           fontSize: 30,
       },

@@ -14,7 +14,7 @@ import {
 } from 'native-base'
 import { Image, TouchableHighlight } from 'react-native'
 
-import { Fonts } from '../styles/App'
+import { Fonts, Colors } from '../styles/App'
 
 
 class OnThisDayView extends Component {
@@ -22,9 +22,9 @@ class OnThisDayView extends Component {
         return (
             <Container>
                 <Content padder>
-                    <TouchableHighlight underlayColor='ưhite' onPress={() => this.props.navigation.navigate('ShowNotes')}>
+                    <TouchableHighlight underlayColor='white' onPress={() => this.props.navigation.navigate('ShowNotes')}>
                         <Card pointerEvents='none' >
-                            <CardItem style={{ backgroundColor: '#ff4081', flexDirection: 'row' }}>
+                            <CardItem style={{ backgroundColor: Colors.mainColor, flexDirection: 'row' }}>
                                 <Left style={{ flex: 1 }}>
                                     <Thumbnail style={{ width: 50, height: 50 }} circular source={require('../assets/icons/boy_couple2.png')} />
                                 </Left>
@@ -38,11 +38,11 @@ class OnThisDayView extends Component {
                                 </Right>
                             </CardItem>
 
-                            <CardItem cardBody style={{ backgroundColor: '#ff4081' }} >
+                            <CardItem cardBody style={{ backgroundColor: Colors.mainColor }} >
                                 <Image source={require('../assets/images/couple.jpg')} style={{ height: 200, width: null, flex: 1, margin: 5 }} />
                             </CardItem>
 
-                            <CardItem style={{ backgroundColor: '#ff4081' }}>
+                            <CardItem style={{ backgroundColor: Colors.mainColor }}>
                                 <Body>
                                     <Text style={{ alignSelf: 'center', fontFamily: Fonts.fiolexGirl, fontSize: 20, color: 'white' }}> A year ago today </Text>
                                 </Body>

@@ -47,7 +47,7 @@ class UserView extends Component {
 
                         <CardItem>
                             <Body>
-                                <Text style={{ alignSelf: 'center', fontFamily: Fonts.fiolexGirl, fontSize: 20, color: '#ff4081' }}> Lê Dương Khang </Text>
+                                <Text style={{ alignSelf: 'center', fontFamily: Fonts.fiolexGirl, fontSize: 20, color: Colors.mainColor }}> Lê Dương Khang </Text>
                             </Body>
                         </CardItem>
                     </Card>
@@ -97,7 +97,7 @@ class UserView extends Component {
                             </Text>
                         </Body>
                         <Right>
-                            <Switch thumbColor='#ff4081' trackColor={('#ff4081', 'grey')} />
+                            <Switch thumbColor={Colors.mainColor} trackColor={(Colors.mainColor, 'grey')} />
                         </Right>
                     </ListItem>
 

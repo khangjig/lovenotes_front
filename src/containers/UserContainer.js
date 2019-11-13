@@ -13,20 +13,20 @@ class UserContainer extends Component {
 
     return {
       title: params ? params.otherParam : 'Me',
-      headerTintColor: '#ff4081',
+      headerTintColor: Colors.mainColor,
       headerStyle: {
         backgroundColor: 'white',
         shadowOpacity: 0,
         elevation: 0,
         borderBottomWidth: 0.7,
-        borderColor: '#ff4081',
+        borderColor: Colors.mainColor,
       },
       headerTitleStyle: {
         textAlign: 'center',
         flex: 1,
         fontFamily: Fonts.rixLoveFool,
         fontWeight: '300',
-        color: '#ff4081',
+        color: Colors.mainColor,
         fontWeight: undefined,
         fontSize: 30,
       },
