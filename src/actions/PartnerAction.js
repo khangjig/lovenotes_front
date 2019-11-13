@@ -1,27 +1,25 @@
 import {
-    GET_USERS_REQUEST,
-    GET_USERS_REQUEST_SUCCESS,
-    GET_USERS_REQUEST_FAIL
+    ADD_PARTNER_REQUEST, ADD_PARTNER_REQUEST_SUCCESS, ADD_PARTNER_REQUEST_FAIL
 } from '../configs/ActionTypes'
 import axios from 'axios'
 
-export function requestGetUsers() {
+export function requestAddPartner() {
     return (dispatch) => {
         dispatch({
-            type: GET_USERS_REQUEST
+            type: ADD_PARTNER_REQUEST
         })
         return axios.request({
-            url: `https://pokeapi.co/api/v2/pokemon?offset=0&limit=50`,
-            method: 'get'
+            url: ``,
+            method: 'post'
         },
         ).then(res => {
             dispatch({
-                type: GET_USERS_REQUEST_SUCCESS,
+                type: ADD_PARTNER_REQUEST_SUCCESS,
                 payload: res.data.results
             })
         }).catch(err => {
             dispatch({
-                type: GET_USERS_REQUEST_FAIL
+                type: ADD_PARTNER_REQUEST_FAIL
             })
         })
     }
