@@ -18,7 +18,7 @@ import { TouchableOpacity, Text, Alert, ToastAndroid } from 'react-native'
 import { ImagePicker } from 'react-native-image-picker'
 
 import { Fonts, Colors } from '../styles/App'
-import { Toast } from '../components/ToastComponent'
+import Toast from '../components/ToastComponent'
 
 class NoteWrittingView extends Component {
 
@@ -26,6 +26,7 @@ class NoteWrittingView extends Component {
         super(props)
         this.state = {
             allowed: null,
+            image : null,
             visible: false
         }
         this.chooseImageFromGallery = this.chooseImageFromGallery.bind(this)
@@ -75,17 +76,24 @@ class NoteWrittingView extends Component {
                     </Form>
                     <Card>
                         <CardItem>
-                            <Body>
-                                <Thumbnail square large source={require('../assets/images/travel4.jpg')} />
+                            <Body style={{flexDirection:'row', flexWrap:'wrap'}}>
+                                <Thumbnail square large source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
+                                <Thumbnail square large source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
+                                {/* <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
+                                <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
+                                <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
+                                <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
+                                <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
+                                <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
+                                <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>                                
+                                <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
+                                <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/> */}
                             </Body>
                             <Right>
-                                <TouchableOpacity style={{ marginTop: 10, }}
-                                    onPress={showAlert}>
+                                <TouchableOpacity
+                                    onPress={this.showAlert}>
                                     <Icon name="md-camera" style={{ color: 'white', backgroundColor: Colors.mainColor, padding: 20, borderRadius: 30 }} />
                                 </TouchableOpacity>
-                                <View style={{ flex: 1 }}>
-                                    {this.state.image ? <Image style={{ flex: 1 }} source={{ uri: this.state.image }}></Image> : null}
-                                </View>
                             </Right>
                         </CardItem>
                     </Card>
@@ -114,7 +122,6 @@ class NoteWrittingView extends Component {
                             Save
                         </Text>
                     </TouchableOpacity>
-
                 </Content>
             </Container>
         )
