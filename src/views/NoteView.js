@@ -77,7 +77,7 @@ class NoteView extends Component {
                             <View key={e.id}>
                                 <ListItem avatar onLongPress={() => this.showAlert(e.id)} onPress={() => this.props.navigation.navigate('ShowNotes', { itemId: e.id, otherParam: '12' })}>
                                     <Left>
-                                        <Thumbnail style={{ width: 50, height: 50 }} square source={e.image} />
+                                        <Thumbnail style={{ width: 50, height: 50 }} square source={{ uri: e.image }} />
                                     </Left>
                                     <Body>
                                         <Text style={{ fontFamily: Fonts.fiolexGirl, fontSize: 18 }}>{this.convertTitle(e.title)}</Text>

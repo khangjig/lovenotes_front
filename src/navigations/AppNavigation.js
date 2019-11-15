@@ -18,7 +18,7 @@ const AppNavigation = createAnimatedSwitchNavigator(
         App: { screen: AppBottomTabNavigator }
     },
     {
-        initialRouteName : 'App'
+        initialRouteName : 'SplashScreen'
     },
     {
         transition: (

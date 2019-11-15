@@ -8,21 +8,23 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 import { ACCESS_TOKEN_ASYNCSTORAGE, REFRESH_TOKEN_ASYNCSTORAGE } from '../configs/config'
 
-export function requestGetUsers(username, password) {
+export function requestGetToken(username, password) {
     return (dispatch) => {
         dispatch({
             type: LOGIN_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.106:3000/auth/token`,
+            url: `http://192.168.37.102:3000/auth/token`,
             method: 'post',
             data: {
                 email: username,
                 password: password
+            },
+            headers: {
+                'Content-Type': 'application/json' 
             }
         },
         ).then(res => {
-
             AsyncStorage.setItem(ACCESS_TOKEN_ASYNCSTORAGE, res.data.accessToken)
             AsyncStorage.setItem(REFRESH_TOKEN_ASYNCSTORAGE, res.data.refreshToken)
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken
@@ -33,6 +35,7 @@ export function requestGetUsers(username, password) {
             })
 
         }).catch(err => {
+            console.log(err)
             dispatch({
                 type: LOGIN_REQUEST_FAIL,
                 payload: "The email or password is not correct"

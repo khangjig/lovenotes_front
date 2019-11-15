@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Right } from 'native-base';
 
 import { Fonts, Colors } from '../styles/App'
+import { requestGetUsers } from '../actions/UserAction'
 import UserView from '../views/UserView'
 
 
@@ -34,6 +35,10 @@ class UserContainer extends Component {
     }
   }
 
+  componentDidMount(){
+    this.props.requestGetUsers()
+  }
+
   render() {
     return (
       <UserView
@@ -46,12 +51,12 @@ class UserContainer extends Component {
 
 const mapStateToProps = state => {
   return ({
-
+    ...state.userReducer
   })
 }
 
 const mapDispatchToProps = dispatch => ({
-
+  requestGetUsers: () => dispatch(requestGetUsers())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserContainer)

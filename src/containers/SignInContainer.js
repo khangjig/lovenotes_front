@@ -4,7 +4,7 @@ import { View } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage'
 
 import { ACCESS_TOKEN_ASYNCSTORAGE, REFRESH_TOKEN_ASYNCSTORAGE } from '../configs/config'
-import { requestGetUsers } from '../actions/LoginAction'
+import { requestGetToken } from '../actions/LoginAction'
 import SignInView from '../views/SignInView'
 import Toast from '../components/ToastComponent'
 
@@ -26,7 +26,7 @@ class SignInContainer extends Component {
     }
 
     submitFrom = async (username, password) => {
-        await this.props.requestGetUsers(username, password)
+        await this.props.requestGetToken(username, password)
         if (this.props.messages !== null) {
             const accessToken = await AsyncStorage.getItem(ACCESS_TOKEN_ASYNCSTORAGE)
             const refreshToken = await AsyncStorage.getItem(REFRESH_TOKEN_ASYNCSTORAGE)
@@ -64,7 +64,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    requestGetUsers: (username, password) => dispatch(requestGetUsers(username, password))
+    requestGetToken: (username, password) => dispatch(requestGetToken(username, password))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignInContainer)
