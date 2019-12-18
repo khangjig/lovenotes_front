@@ -1,7 +1,6 @@
 import {
     GET_USERS_REQUEST, GET_USERS_REQUEST_SUCCESS, GET_USERS_REQUEST_FAIL,
     ADD_USERS_REQUEST, ADD_USERS_REQUEST_SUCCESS, ADD_USERS_REQUEST_FAIL,
-    EDIT_USERS_REQUEST, EDIT_USERS_REQUEST_SUCCESS, EDIT_USERS_REQUEST_FAIL,
     CHANGE_PASSWORD_REQUEST, CHANGE_PASSWORD_REQUEST_SUCCESS, CHANGE_PASSWORD_REQUEST_FAIL,
     GET_AVATAR_REQUEST, GET_AVATAR_REQUEST_SUCCESS, GET_AVATAR_REQUEST_FAIL,
     EDIT_USERNAME_REQUEST, EDIT_USERNAME_REQUEST_SUCCESS, EDIT_USERNAME_REQUEST_FAIL,
@@ -167,28 +166,6 @@ export function requestAddUsers() {
         }).catch(err => {
             dispatch({
                 type: ADD_USERS_REQUEST_FAIL
-            })
-        })
-    }
-}
-
-export function requestEditUsers() {
-    return (dispatch) => {
-        dispatch({
-            type: EDIT_USERS_REQUEST
-        })
-        return axios.request({
-            url: ``,
-            method: 'put'
-        },
-        ).then(res => {
-            dispatch({
-                type: EDIT_USERS_REQUEST_SUCCESS,
-                payload: res.data.results
-            })
-        }).catch(err => {
-            dispatch({
-                type: EDIT_USERS_REQUEST_FAIL
             })
         })
     }
