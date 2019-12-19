@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Right } from 'native-base'
 
 import { Fonts, Colors } from '../styles/App'
+import UserView from '../views/UserView'
 import {
   requestGetUsers,
   requestGetAvatarUsers,
@@ -11,7 +12,6 @@ import {
   requestEditBirthday,
   requestEditUsername
 } from '../actions/UserAction'
-import UserView from '../views/UserView'
 
 class UserContainer extends Component {
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -57,20 +57,20 @@ class UserContainer extends Component {
     this.props.requestEditLoveDay(loveday)
   }
 
-  changeBirthday = (birthday) =>{
+  changeBirthday = (birthday) => {
     this.props.requestEditBirthday(birthday)
   }
 
   render() {
     return (
-        <UserView
-          {...this.props}
-          {...this.state}
-          changeAvatar={(image) => this.changeAvatar(image)}
-          changeUsername={(name) => this.changeUsername(name)}
-          changeLoveDay={(loveday) => this.changeLoveDay(loveday)}
-          changeBirthday={(birthday) => this.changeBirthday(birthday)}
-        />
+      <UserView
+        {...this.props}
+        {...this.state}
+        changeAvatar={(image) => this.changeAvatar(image)}
+        changeUsername={(name) => this.changeUsername(name)}
+        changeLoveDay={(loveday) => this.changeLoveDay(loveday)}
+        changeBirthday={(birthday) => this.changeBirthday(birthday)}
+      />
     )
   }
 }

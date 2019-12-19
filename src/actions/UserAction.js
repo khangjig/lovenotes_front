@@ -122,7 +122,7 @@ export function requestEditLoveDay(loveday) {
 export function requestEditBirthday(birthday) {
 
     var formData = new FormData()
-    formData.append('loveDay', moment(birthday).format('YYYY MM DD'))
+    formData.append('birthday', moment(birthday).format('YYYY MM DD'))
 
     return (dispatch) => {
         dispatch({

@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
-import {
-    View,
-    Text,
-    Button
-} from 'react-native'
+import { View, Text } from 'react-native'
 
 class ShowNoteView extends Component {
-    
+
     render() {
         return (
             <View>

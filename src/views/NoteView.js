@@ -1,35 +1,15 @@
 import React, { Component } from 'react'
-import {
-    Alert, View, Button
-} from 'react-native'
-import {
-    Container,
-    Right,
-    Left,
-    Icon,
-    Text,
-    List,
-    ListItem,
-    Body,
-    Thumbnail,
-    Fab,
-} from 'native-base'
+import { Alert, View, ActivityIndicator } from 'react-native'
+import { Container, Right, Left, Icon, Text, List, ListItem, Body, Thumbnail, Fab } from 'native-base'
+import moment from 'moment'
 
 import { Fonts, Colors } from '../styles/App'
 
-const data = [
-    {
-        id: 1,
-        title: "Nothing gonna change my love for you",
-        content: "i cant sleep, i just cant breath. in your shawdow...",
-        date: '8/12/1997',
-        image: '../assets/images/travel2.jpg'
-    }
-]
 
 class NoteView extends Component {
+
     convertDate = (date) => {
-        var date = new Date(date)
+        var date = new Date(moment(date).format('YYYY/MM/DD'))
         var monthNames = [
             "Jan", "Feb", "Mar",
             "Apr", "May", "Jun", "Jul",
@@ -45,16 +25,16 @@ class NoteView extends Component {
     }
 
     convertTitle = (str) => {
-        return str.substring(0, 24) + ' . . .'
+        return str.substring(0, 20) + ' . . .'
     }
 
     convertContent = (str) => {
-        return str.substring(0, 34) + ' . . .'
+        return str.substring(0, 28) + ' . . .'
     }
 
-    showAlert = (e) => {
+    deleteNote = (id) => {
         Alert.alert(
-            'Alert' + e,
+            'Alert' + id,
             'Do you want detele it ?',
             [
                 {
@@ -62,7 +42,7 @@ class NoteView extends Component {
                     onPress: () => console.log('Cancel Pressed'),
                     style: 'cancel',
                 },
-                { text: 'OK', onPress: () => console.log('OK Pressed') },
+                { text: 'OK', onPress: () => this.props.deleteNote(id) },
             ],
             { cancelable: false },
         )
@@ -71,40 +51,37 @@ class NoteView extends Component {
     render() {
         return (
             <Container>
-                <List>
-                    {
-                        data.map(e =>
-                            <View key={e.id}>
-                                <ListItem avatar onLongPress={() => this.showAlert(e.id)} onPress={() => this.props.navigation.navigate('ShowNotes', { itemId: e.id, otherParam: '12' })}>
-                                    <Left>
-                                        <Thumbnail style={{ width: 50, height: 50 }} square source={{ uri: e.image }} />
-                                    </Left>
-                                    <Body>
-                                        <Text style={{ fontFamily: Fonts.fiolexGirl, fontSize: 18 }}>{this.convertTitle(e.title)}</Text>
-                                        <Text note style={{ fontFamily: Fonts.fiolexGirl }}>{this.convertContent(e.content)} </Text>
-                                    </Body>
-                                    <Right>
-                                        <Text note style={{ fontFamily: Fonts.fiolexGirl, fontSize: 15 }}>{this.convertDate(e.date)}</Text>
-                                    </Right>
-                                </ListItem>
-                            </View>
-                        )
-                    }
-
-
-                    <ListItem avatar onPress={() => this.props.navigation.navigate('ShowNotes')}>
-                        <Left>
-                            <Thumbnail style={{ width: 50, height: 50 }} square source={require('../assets/images/travel2.jpg')} />
-                        </Left>
-                        <Body>
-                            <Text style={{ fontFamily: Fonts.fiolexGirl, fontSize: 18 }}> Title</Text>
-                            <Text note style={{ fontFamily: Fonts.fiolexGirl }}> Tell me what you thinking  . . . </Text>
-                        </Body>
-                        <Right>
-                            <Text note style={{ fontFamily: Fonts.fiolexGirl, fontSize: 15 }}> Jan 1, 2019</Text>
-                        </Right>
-                    </ListItem>
-                </List>
+                {
+                    this.props.isLoadingGetListNote ?
+                        <View style={{ padding: '50%', alignSelf: 'center', justifyContent: 'center' }}>
+                            <ActivityIndicator size="small" color={Colors.mainColor} />
+                        </View>
+                        :
+                        <List>
+                            {
+                                this.props.listNote.map(e =>
+                                    <View key={e.id}>
+                                        <ListItem avatar
+                                            onLongPress={() => this.deleteNote(e.id)}
+                                            onPress={() => this.props.navigation.navigate('ShowNotes', { itemId: e.id, otherParam: this.convertTitle(e.title) })}>
+                                            <Left>
+                                                <View style={{ width: 52, height: 52, borderWidth: 1, borderColor: Colors.mainColor, padding: 1, alignContent: 'center', justifyContent: 'center' }}>
+                                                    <Thumbnail style={{ width: 50, height: 50, alignSelf: 'center' }} square source={{ uri: 'data:image/png;base64,' + e.firstImage }} />
+                                                </View>
+                                            </Left>
+                                            <Body>
+                                                <Text style={{ fontFamily: Fonts.fiolexGirl, fontSize: 18 }}>{this.convertTitle(e.title)}</Text>
+                                                <Text note style={{ fontFamily: Fonts.fiolexGirl }}>{this.convertContent(e.content)} </Text>
+                                            </Body>
+                                            <Right>
+                                                <Text note style={{ fontFamily: Fonts.fiolexGirl, fontSize: 15 }}>{this.convertDate(e.date)}</Text>
+                                            </Right>
+                                        </ListItem>
+                                    </View>
+                                )
+                            }
+                        </List>
+                }
 
                 <View style={{ flex: 1 }}>
                     <Fab direction="up"
@@ -114,7 +91,7 @@ class NoteView extends Component {
                         <Icon name="md-add" />
                     </Fab>
                 </View>
-            </Container>
+            </Container >
         )
     }
 }

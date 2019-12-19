@@ -3,7 +3,10 @@ import { connect } from 'react-redux'
 
 import { Fonts, Colors } from '../styles/App'
 import OnThisDayView from '../views/OnThisDayView'
-
+import {
+    requestGetNoteOnThisDay,
+    requestGetNoteByWeek
+  } from '../actions/NoteAction'
 
 class OnThisDayContainer extends Component {
 
@@ -31,6 +34,12 @@ class OnThisDayContainer extends Component {
         }
     }
 
+    componentDidMount()
+    {
+        this.props.requestGetNoteOnThisDay()
+        this.props.requestGetNoteByWeek()
+    }
+    
     render() {
         return (
             <OnThisDayView
@@ -43,12 +52,13 @@ class OnThisDayContainer extends Component {
 
 const mapStateToProps = state => {
     return ({
-
+        ...state.noteReducer,
     })
 }
 
 const mapDispatchToProps = dispatch => ({
-
+    requestGetNoteOnThisDay:()=>dispatch(requestGetNoteOnThisDay()),
+    requestGetNoteByWeek:()=>dispatch(requestGetNoteByWeek()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(OnThisDayContainer)

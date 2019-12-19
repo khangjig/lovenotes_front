@@ -130,19 +130,19 @@ class UserView extends Component {
                         </Dialog>
                     </Portal>
                     <Content>
-                        <Card pointerEvents='none' style={{ height:150}}>
+                        <Card pointerEvents='none' style={{ height: 150 }}>
                             <CardItem style={{ alignSelf: 'center', justifyContent: 'center' }} onPress={this.show_Toast}>
                                 {
-                                    this.props.isLoadingGetAvatar?
-                                    <View style={{width:70, height:70, alignSelf:'center', justifyContent: 'center'}}>
-                                        <ActivityIndicator size="small" color={Colors.mainColor} />
-                                    </View>
-                                    :
-                                    <Thumbnail large circular source={{uri:'data:image/png;base64,' + this.props.avatarUser}} />
+                                    this.props.isLoadingGetAvatar ?
+                                        <View style={{ width: 70, height: 70, alignSelf: 'center', justifyContent: 'center' }}>
+                                            <ActivityIndicator size="small" color={Colors.mainColor} />
+                                        </View>
+                                        :
+                                        <Thumbnail large circular source={{ uri: 'data:image/png;base64,' + this.props.avatarUser }} />
                                 }
                             </CardItem>
 
-                            <CardItem onPress={this.show_Toast} style={{marginTop:-10}}>
+                            <CardItem onPress={this.show_Toast} style={{ marginTop: -10 }}>
                                 <Body>
                                     <Text style={{ alignSelf: 'center', fontFamily: Fonts.rixLoveFool, fontSize: 20, color: Colors.mainColor }}>
                                         {this.props.userInfo.name}
@@ -174,19 +174,19 @@ class UserView extends Component {
                                 </Text>
                             </Body>
                             {
-                                !this.props.isLoadingGetUser?
-                                <DatePicker
-                                    defaultDate={new Date(moment(this.props.userInfo.birthday).format('YYYY MM DD'))}
-                                    minimumDate={new Date(1997, 1, 1)}
-                                    maximumDate={new Date.now()}
-                                    locale={"en"}
-                                    modalTransparent={false}
-                                    animationType={"fade"}
-                                    androidMode={"default"}
-                                    textStyle={{ color: Colors.mainColor, fontFamily: Fonts.rixLoveFool }}
-                                    placeHolderTextStyle={{ color: Colors.mainColor, fontFamily: Fonts.rixLoveFool }}
-                                    onDateChange={this.setBirthday}
-                                />:null
+                                !this.props.isLoadingGetUser ?
+                                    <DatePicker
+                                        defaultDate={new Date(moment(this.props.userInfo.birthday).format('YYYY/MM/DD'))}
+                                        minimumDate={new Date(1950, 1, 1)}
+                                        maximumDate={Date.now()}
+                                        locale={"en"}
+                                        modalTransparent={false}
+                                        animationType={"fade"}
+                                        androidMode={"default"}
+                                        textStyle={{ color: Colors.mainColor, fontFamily: Fonts.rixLoveFool }}
+                                        placeHolderTextStyle={{ color: Colors.mainColor, fontFamily: Fonts.rixLoveFool }}
+                                        onDateChange={this.setBirthday}
+                                    /> : null
                             }
                         </ListItem>
 
@@ -197,19 +197,19 @@ class UserView extends Component {
                                 </Text>
                             </Body>
                             {
-                                !this.props.isLoadingGetUser?
-                                <DatePicker
-                                    defaultDate={new Date(moment(this.props.userInfo.loveDate).format('YYYY MM DD'))}
-                                    minimumDate={new Date(1997, 1, 1)}
-                                    maximumDate={new Date.now()}
-                                    locale={"en"}
-                                    modalTransparent={false}
-                                    animationType={"fade"}
-                                    androidMode={"default"}
-                                    textStyle={{ color: Colors.mainColor, fontFamily: Fonts.rixLoveFool }}
-                                    placeHolderTextStyle={{ color: Colors.mainColor, fontFamily: Fonts.rixLoveFool }}
-                                    onDateChange={this.setLoveDay}
-                                />:null
+                                !this.props.isLoadingGetUser ?
+                                    <DatePicker
+                                        defaultDate={new Date(moment(this.props.userInfo.loveDate).format('YYYY/MM/DD'))}
+                                        minimumDate={new Date(1950, 1, 1)}
+                                        maximumDate={Date.now()}
+                                        locale={"en"}
+                                        modalTransparent={false}
+                                        animationType={"fade"}
+                                        androidMode={"default"}
+                                        textStyle={{ color: Colors.mainColor, fontFamily: Fonts.rixLoveFool }}
+                                        placeHolderTextStyle={{ color: Colors.mainColor, fontFamily: Fonts.rixLoveFool }}
+                                        onDateChange={this.setLoveDay}
+                                    /> : null
                             }
                         </ListItem>
 

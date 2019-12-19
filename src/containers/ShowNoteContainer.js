@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
-import{ TouchableOpacity, Text } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { Icon } from 'native-base'
 
 import ShowNoteView from '../views/ShowNoteView'
 import { Fonts, Colors } from '../styles/App'
+import {
+  requestGetInfoNote,
+  requestGetNoteImage
+} from '../actions/NoteAction'
 
 class ShowNoteContainer extends Component {
 
@@ -12,7 +16,7 @@ class ShowNoteContainer extends Component {
     const { params } = navigation.state
 
     return {
-      title: params ? params.otherParam : 'My love - The Song we singed',
+      title: params ? params.otherParam : 'My love',
 
       headerTintColor: Colors.mainColor,
       headerStyle: {
@@ -34,38 +38,41 @@ class ShowNoteContainer extends Component {
       headerRight: <TouchableOpacity
         onPress={() => navigation.navigate('Users')}
         style={{
-            backgroundColor: 'transparent',
-            alignSelf: 'center',
-            marginRight: 18,
-            shadowColor: 0,
-            elevation: 0,
+          backgroundColor: 'transparent',
+          alignSelf: 'center',
+          marginRight: 18,
+          shadowColor: 0,
+          elevation: 0,
         }}>
         <Icon name="md-create" style={{ color: Colors.mainColor }} />
       </TouchableOpacity>
     }
   }
 
-  render() {
+  componentDidMount() {
+    this.props.requestGetInfoNote(this.props.navigation.state.params.itemId)
+    this.props.requestGetNoteImage(this.props.navigation.state.params.itemId)
+  }
 
+  render() {
     return (
       <ShowNoteView
         {...this.props}
         {...this.state}
       />
-      
-      // <Text>itemId: {JSON.stringify(this.props.navigation.getParam('itemId'))}</Text>
     )
   }
 }
 
 const mapStateToProps = state => {
   return ({
-
+    ...state.noteReducer,
   })
 }
 
 const mapDispatchToProps = dispatch => ({
-
+  requestGetInfoNote: (id) => dispatch(requestGetInfoNote(id)),
+  requestGetNoteImage: (id) => dispatch(requestGetNoteImage(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShowNoteContainer)
