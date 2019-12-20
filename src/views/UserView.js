@@ -217,15 +217,20 @@ class UserView extends Component {
                             <Body>
                                 <Text style={{ fontFamily: Fonts.rixLoveFool, fontSize: 16 }}>
                                     Sync Code
-                            </Text>
+                                </Text>
                             </Body>
+                            <Right>
+                                <Text style={{ fontFamily: Fonts.rixLoveFool, color: Colors.mainColor, fontSize: 16 }}>
+                                    {this.props.userInfo.syncCode}
+                                </Text>
+                            </Right>
                         </ListItem>
 
                         <ListItem onPress={this.show_Toast}>
                             <Body>
                                 <Text style={{ fontFamily: Fonts.rixLoveFool, fontSize: 16 }}>
                                     Password
-                            </Text>
+                                </Text>
                             </Body>
                         </ListItem>
 
@@ -233,7 +238,7 @@ class UserView extends Component {
                             <Body>
                                 <Text style={{ fontFamily: Fonts.rixLoveFool, fontSize: 16 }}>
                                     Log out
-                            </Text>
+                                </Text>
                             </Body>
                         </ListItem>
                     </Content>

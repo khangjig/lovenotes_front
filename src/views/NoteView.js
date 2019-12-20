@@ -60,25 +60,45 @@ class NoteView extends Component {
                             :
                             <List>
                                 {
-                                    this.props.listNote.map(e =>
-                                        <View key={e.id}>
-                                            <ListItem avatar
-                                                onLongPress={() => this.deleteNote(e.id)}
-                                                onPress={() => this.props.navigation.navigate('ShowNotes', { itemId: e.id, otherParam: this.convertTitle(e.title) })}>
-                                                <Left>
-                                                    <View style={{ width: 52, height: 52, borderWidth: 1, borderColor: Colors.mainColor, padding: 1, alignContent: 'center', justifyContent: 'center' }}>
-                                                        <Thumbnail style={{ width: 50, height: 50, alignSelf: 'center' }} square source={{ uri: 'data:image/png;base64,' + e.firstImage }} />
-                                                    </View>
-                                                </Left>
-                                                <Body>
-                                                    <Text style={{ fontFamily: Fonts.fiolexGirl, fontSize: 18 }}>{this.convertTitle(e.title)}</Text>
-                                                    <Text note style={{ fontFamily: Fonts.fiolexGirl }}>{this.convertContent(e.content)} </Text>
-                                                </Body>
-                                                <Right>
-                                                    <Text note style={{ fontFamily: Fonts.fiolexGirl, fontSize: 15 }}>{this.convertDate(e.date)}</Text>
-                                                </Right>
-                                            </ListItem>
-                                        </View>
+                                    this.props.listNote.map(e => {
+                                        return e.userId == this.props.userId ?
+                                            <View key={e.id}>
+                                                <ListItem avatar
+                                                    onLongPress={() => this.deleteNote(e.id)}
+                                                    onPress={() => this.props.navigation.navigate('ShowNotes', { itemId: e.id, otherParam: this.convertTitle(e.title) })}>
+                                                    <Left>
+                                                        <View style={{ width: 52, height: 52, borderWidth: 1, borderColor: Colors.mainColor, padding: 1, alignContent: 'center', justifyContent: 'center' }}>
+                                                            <Thumbnail style={{ width: 50, height: 50, alignSelf: 'center' }} square source={{ uri: 'data:image/png;base64,' + e.firstImage }} />
+                                                        </View>
+                                                    </Left>
+                                                    <Body>
+                                                        <Text style={{ fontFamily: Fonts.fiolexGirl, fontSize: 18 }}>{this.convertTitle(e.title)}</Text>
+                                                        <Text note style={{ fontFamily: Fonts.fiolexGirl }}>{this.convertContent(e.content)} </Text>
+                                                    </Body>
+                                                    <Right>
+                                                        <Text note style={{ fontFamily: Fonts.fiolexGirl, fontSize: 15 }}>{this.convertDate(e.date)}</Text>
+                                                    </Right>
+                                                </ListItem>
+                                            </View> :
+                                            <View key={e.id}>
+                                                <ListItem avatar
+                                                    onLongPress={() => this.deleteNote(e.id)}
+                                                    onPress={() => this.props.navigation.navigate('ShowNotes', { itemId: e.id, otherParam: this.convertTitle(e.title) })}>
+                                                    <Left>
+                                                        <View style={{ width: 52, height: 52, borderWidth: 1, borderColor: 'yellow', padding: 1, alignContent: 'center', justifyContent: 'center' }}>
+                                                            <Thumbnail style={{ width: 50, height: 50, alignSelf: 'center' }} square source={{ uri: 'data:image/png;base64,' + e.firstImage }} />
+                                                        </View>
+                                                    </Left>
+                                                    <Body>
+                                                        <Text style={{ fontFamily: Fonts.fiolexGirl, fontSize: 18 }}>{this.convertTitle(e.title)}</Text>
+                                                        <Text note style={{ fontFamily: Fonts.fiolexGirl }}>{this.convertContent(e.content)} </Text>
+                                                    </Body>
+                                                    <Right>
+                                                        <Text note style={{ fontFamily: Fonts.fiolexGirl, fontSize: 15 }}>{this.convertDate(e.date)}</Text>
+                                                    </Right>
+                                                </ListItem>
+                                            </View>
+                                    }
                                     )
                                 }
                             </List>

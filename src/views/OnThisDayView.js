@@ -90,10 +90,7 @@ class OnThisDayView extends Component {
                                                     </CardItem>
                                                 </Card>
                                             </TouchableHighlight>
-                                        ) :
-                                        <Text style={{ textAlign: 'center', marginTop: 10, fontFamily: Fonts.fiolexGirl, color: Colors.greyColor }}>
-                                            No Events Today
-                                        </Text>
+                                        ) : null
                                 }
                             </View>
                     }

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { Icon, Left } from 'native-base'
+import AsyncStorage from '@react-native-community/async-storage'
 
 import { Colors, Fonts } from '../styles/App'
 import NoteView from '../views/NoteView'
@@ -11,6 +12,9 @@ import {
   requestGetInfoNote,
   requestDeleteNote
 } from '../actions/NoteAction'
+
+
+import { USER_ID_ASYNCSTORAGE } from '../configs/config'
 
 class NoteContainer extends Component {
 
@@ -47,8 +51,14 @@ class NoteContainer extends Component {
     }
   }
 
-  componentDidMount() {
+  constructor(props) {
+    super(props)
+    this.userID = null
+  }
+
+  async componentDidMount() {
     this.props.requestGetListNotes()
+    this.userID = await AsyncStorage.getItem(USER_ID_ASYNCSTORAGE)
   }
 
   getNoteInfo = (id) => {
@@ -68,6 +78,7 @@ class NoteContainer extends Component {
       <NoteView
         {...this.props}
         {...this.state}
+        userId={this.userID}
         getNoteInfo={(id) => this.getNoteInfo(id)}
         addNote={() => this.addNote()}
         deleteNote={(id) => this.deleteNote(id)}
