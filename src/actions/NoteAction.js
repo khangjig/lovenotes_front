@@ -33,14 +33,34 @@ export function requestGetListNotes() {
     }
 }
 
-export function requestAddNote() {
+export function requestAddNote(title, content, listImage) {
+
+    let formData = new FormData
+    formData.append('title', title)
+    formData.append('content', content)
+    formData.append('anniversary', '12/1/2018')
+    formData.append('hidden', false)
+    formData.append('alarm', true)
+    listImage.forEach((image) => {
+        const file = {
+            name: Math.floor(Math.random() * Math.floor(999999999)) + '.jpg',
+            uri: Platform.OS === 'android' ? image.uri : image.uri.replace('file://', ''),
+            type: 'image/jpeg',
+        }
+        formData.append('images', file)
+    })
+
     return (dispatch) => {
         dispatch({
             type: ADD_NOTE_REQUEST
         })
         return axios.request({
             url: `http://192.168.37.103:3000/api/note`,
-            method: 'post'
+            method: 'post',
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         },
         ).then(res => {
             dispatch(

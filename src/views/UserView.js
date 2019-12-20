@@ -88,7 +88,6 @@ class UserView extends Component {
 
     chooseImageFromGallery = () => {
         ImagePicker.showImagePicker(options, async (response) => {
-            // console.log('Response = ', response)
             await this.props.changeAvatar(response)
 
             if (response.didCancel) {

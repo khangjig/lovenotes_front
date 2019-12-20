@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Container, Form, Input, Item, Card, Right, Icon, Textarea, Thumbnail, Body, Content, CardItem, View, } from 'native-base'
+import { Container, Form, Input, Item, Card, Right, Icon, Textarea, Thumbnail, Body, Content, CardItem, View, DatePicker } from 'native-base'
 import { TouchableOpacity, Text, Alert, ToastAndroid, TouchableHighlight } from 'react-native'
 import ImagePicker from 'react-native-image-picker'
+import moment from 'moment'
 
 import { Fonts, Colors } from '../styles/App'
 import Toast from '../components/ToastComponent'
@@ -22,12 +23,11 @@ class NoteWrittingView extends Component {
         this.state = {
             visible: false,
             reset: null,
-            index: 0
+            index: 0,
+            title: null,
+            content: null,
+            list: []
         }
-    }
-
-    static defaultProps = {
-        listImage: []
     }
 
     chooseImageFromGallery = () => {
@@ -41,12 +41,11 @@ class NoteWrittingView extends Component {
                 console.log('User tapped custom button: ', response.customButton)
             } else {
 
-                this.props.listImage.push({
-                    uri: response.uri,
-                    index: this.state.index
-                })
-
                 this.setState({
+                    list: [...this.state.list, {
+                        uri: response.uri,
+                        id: this.state.index
+                    }],
                     index: this.state.index + 1
                 })
             }
@@ -80,34 +79,92 @@ class NoteWrittingView extends Component {
     }
 
     submitForm = () => {
-        this.props.addNote(this.props.listImage)
+        this.props.addNote(this.state.title, this.state.content, this.state.list)
     }
 
     deleteImage = (e) => {
-        delete this.props.listImage[e]
+
+        let temp = []
+        for (i = 0; i < this.state.list.length; i++) {
+            if (this.state.list[i].id !== e) {
+                temp.push(this.state.list[i])
+            }
+        }
+
         this.setState({
-            reset: null
+            list: [...temp]
         })
     }
 
+    onChangeContent = (e) => {
+        this.setState({
+            content: e
+        })
+    }
+
+    onChangeTitle = (e) => {
+        this.setState({
+            title: e
+        })
+    }
+
+    setAnniversary = (newDate) => {
+        // this.props.changeLoveDay(newDate)
+    }
+
+    setNotification = () => {
+        // this.props.changeLoveDay(newDate)
+    }
+
     render() {
-        console.log(this.props)
         return (
             <Container>
                 <Toast visible={this.state.visible} message='Saved' />
                 <Content padder>
+                    <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <View>
+                            <DatePicker
+                                defaultDate={new Date(moment().format('YYYY/MM/DD'))}
+                                minimumDate={new Date(1950, 1, 1)}
+                                maximumDate={Date.now()}
+                                locale={"en"}
+                                modalTransparent={false}
+                                animationType={"fade"}
+                                androidMode={"default"}
+                                textStyle={{ color: Colors.mainColor, fontFamily: Fonts.rixLoveFool }}
+                                placeHolderTextStyle={{ color: Colors.mainColor, fontFamily: Fonts.rixLoveFool }}
+                                onDateChange={this.setAnniversary}
+                            />
+                        </View>
+                        <View style={{ paddingTop: 10 }}>
+                            <TouchableOpacity
+                                onPress={this.setNotification}
+                                style={{
+                                    alignSelf: 'center',
+                                    marginRight: 18,
+                                    shadowColor: 0,
+                                    elevation: 0,
+                                }}>
+                                <Icon name="md-notifications" style={{ color: Colors.greyColor }} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                     <Form>
                         <Item>
-                            <Input placeholder=" Title . . . " style={{ fontFamily: Fonts.fiolexGirl }} />
+                            <Input
+                                onChangeText={this.onChangeTitle}
+                                placeholder=" Title . . . "
+                                style={{ fontFamily: Fonts.fiolexGirl }}
+                            />
                         </Item>
                     </Form>
                     <Card>
                         <CardItem>
                             <Body style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                                 {
-                                    this.props.listImage !== null ?
-                                        this.props.listImage.map(x =>
-                                            <TouchableHighlight key={x.index} onPress={() => this.deleteImage(x.index)}>
+                                    this.state.list !== null ?
+                                        this.state.list.map(x =>
+                                            <TouchableHighlight key={x.id} onPress={() => this.deleteImage(x.id)}>
                                                 <Thumbnail square large source={{ uri: x.uri }} style={{ margin: 1 }} />
                                             </TouchableHighlight>
                                         ) : null
@@ -123,7 +180,13 @@ class NoteWrittingView extends Component {
                         </CardItem>
                     </Card>
                     <Form>
-                        <Textarea rowSpan={12} bordered placeholder=" Content . . . " style={{ fontFamily: Fonts.fiolexGirl }} />
+                        <Textarea
+                            onChangeText={this.onChangeContent}
+                            rowSpan={12}
+                            bordered
+                            placeholder=" Content . . . "
+                            style={{ fontFamily: Fonts.fiolexGirl }}
+                        />
                     </Form>
                     <TouchableOpacity
                         style={{

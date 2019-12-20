@@ -8,7 +8,6 @@ import { Colors, Fonts } from '../styles/App'
 import NoteView from '../views/NoteView'
 import {
   requestGetListNotes,
-  requestAddNote,
   requestGetInfoNote,
   requestDeleteNote
 } from '../actions/NoteAction'
@@ -65,10 +64,6 @@ class NoteContainer extends Component {
     this.props.requestGetInfoNote(id)
   }
 
-  addNote = () => {
-    this.props.requestAddNote()
-  }
-
   deleteNote = (id) => {
     this.props.requestDeleteNote(id)
   }
@@ -80,7 +75,6 @@ class NoteContainer extends Component {
         {...this.state}
         userId={this.userID}
         getNoteInfo={(id) => this.getNoteInfo(id)}
-        addNote={() => this.addNote()}
         deleteNote={(id) => this.deleteNote(id)}
       />
     )
@@ -95,7 +89,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   requestGetListNotes: () => dispatch(requestGetListNotes()),
-  requestAddNote: () => dispatch(requestAddNote()),
   requestGetInfoNote: (id) => dispatch(requestGetInfoNote(id)),
   requestDeleteNote: (id) => dispatch(requestDeleteNote(id)),
 })
