@@ -10,7 +10,10 @@ import {
     GET_NAME_PARTNER_REQUEST, GET_NAME_PARTNER_SUCCESS, GET_NAME_PARTNER_FAIL,
     GET_AVATAR_PARTNER_REQUEST, GET_AVATAR_PARTNER_SUCCESS, GET_AVATAR_PARTNER_FAIL,
     UPDATE_AVATAR_PARTNER_REQUEST, UPDATE_AVATAR_PARTNER_SUCCESS, UPDATE_AVATAR_PARTNER_FAIL,
-    EDIT_NAME_PARTNER_REQUEST, EDIT_NAME_PARTNER_SUCCESS, EDIT_NAME_PARTNER_FAIL
+    EDIT_NAME_PARTNER_REQUEST, EDIT_NAME_PARTNER_SUCCESS, EDIT_NAME_PARTNER_FAIL,
+    GET_NOTIFICATION_REQUEST, GET_NOTIFICATION_SUCCESS, GET_NOTIFICATION_FAIL,
+    CREATE_NOTIFICATION_REQUEST, CREATE_NOTIFICATION_SUCCESS, CREATE_NOTIFICATION_FAIL,
+    ACTIVED_SYNCCODE_REQUEST, ACTIVED_SYNCCODE_SUCCESS, ACTIVED_SYNCCODE_FAIL
 } from '../configs/ActionTypes'
 
 const initialState = {
@@ -24,11 +27,15 @@ const initialState = {
     isLoadingGetAvatarPartner: true,
     isLoadingUpdateNamePartner: true,
     isLoadingUpdateAvatarPartner: true,
+    isLoadingGetNotification: true,
+    isLoadingCreateNotificaton: true,
+    isLoadingActivedSyncCode: true,
     userInfo: [],
     avatarUser: null,
     message: null,
     namePartner: null,
     avatarPartner: null,
+    notificationInfo: null
 }
 
 const userReducer = (state = initialState, action) => {
@@ -202,6 +209,55 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoadingUpdateAvatarPartner: false
+            }
+        //get notificaion
+        case GET_NOTIFICATION_REQUEST:
+            return {
+                ...state,
+                isLoadingGetNotification: true
+            }
+        case GET_NOTIFICATION_SUCCESS:
+            return {
+                ...state,
+                notificationInfo: action.payload,
+                isLoadingGetNotification: false
+            }
+        case GET_NOTIFICATION_FAIL:
+            return {
+                ...state,
+                isLoadingGetNotification: false
+            }
+        //send synccode
+        case CREATE_NOTIFICATION_REQUEST:
+            return {
+                ...state,
+                isLoadingCreateNotificaton: true
+            }
+        case CREATE_NOTIFICATION_SUCCESS:
+            return {
+                ...state,
+                isLoadingCreateNotificaton: false
+            }
+        case CREATE_NOTIFICATION_FAIL:
+            return {
+                ...state,
+                isLoadingCreateNotificaton: false
+            }
+        //actived synccode
+        case ACTIVED_SYNCCODE_REQUEST:
+            return {
+                ...state,
+                isLoadingActivedSyncCode: true
+            }
+        case ACTIVED_SYNCCODE_SUCCESS:
+            return {
+                ...state,
+                isLoadingActivedSyncCode: false
+            }
+        case ACTIVED_SYNCCODE_FAIL:
+            return {
+                ...state,
+                isLoadingActivedSyncCode: false
             }
 
         default:

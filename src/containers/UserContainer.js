@@ -10,7 +10,10 @@ import {
   requestUpdateAvatarUsers,
   requestEditLoveDay,
   requestEditBirthday,
-  requestEditUsername
+  requestEditUsername,
+  requestGetNotification,
+  requestSendSyncCode,
+  requestActivedSyncCode
 } from '../actions/UserAction'
 
 class UserContainer extends Component {
@@ -43,6 +46,7 @@ class UserContainer extends Component {
   componentDidMount() {
     this.props.requestGetUsers()
     this.props.requestGetAvatarUsers()
+    this.props.requestGetNotification()
   }
 
   changeAvatar = (image) => {
@@ -61,6 +65,14 @@ class UserContainer extends Component {
     this.props.requestEditBirthday(birthday)
   }
 
+  sendSyncCode = (syncCode) => {
+    this.props.requestSendSyncCode(syncCode)
+  }
+
+  activedSyncCode = (id) => {
+    this.props.requestActivedSyncCode(id)
+  }
+
   render() {
     return (
       <UserView
@@ -70,6 +82,8 @@ class UserContainer extends Component {
         changeUsername={(name) => this.changeUsername(name)}
         changeLoveDay={(loveday) => this.changeLoveDay(loveday)}
         changeBirthday={(birthday) => this.changeBirthday(birthday)}
+        sendSyncCode={(syncCode) => this.sendSyncCode(syncCode)}
+        activedSyncCode={(id) => this.activedSyncCode(id)}
       />
     )
   }
@@ -88,6 +102,9 @@ const mapDispatchToProps = dispatch => ({
   requestEditUsername: (name) => dispatch(requestEditUsername(name)),
   requestEditLoveDay: (loveDay) => dispatch(requestEditLoveDay(loveDay)),
   requestEditBirthday: (birthday) => dispatch(requestEditBirthday(birthday)),
+  requestGetNotification: () => dispatch(requestGetNotification()),
+  requestSendSyncCode: (syncCode) => dispatch(requestSendSyncCode(syncCode)),
+  requestActivedSyncCode: (id) => dispatch(requestActivedSyncCode(id)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserContainer)

@@ -10,7 +10,10 @@ import {
     GET_NAME_PARTNER_REQUEST, GET_NAME_PARTNER_SUCCESS, GET_NAME_PARTNER_FAIL,
     GET_AVATAR_PARTNER_REQUEST, GET_AVATAR_PARTNER_SUCCESS, GET_AVATAR_PARTNER_FAIL,
     UPDATE_AVATAR_PARTNER_REQUEST, UPDATE_AVATAR_PARTNER_SUCCESS, UPDATE_AVATAR_PARTNER_FAIL,
-    EDIT_NAME_PARTNER_REQUEST, EDIT_NAME_PARTNER_SUCCESS, EDIT_NAME_PARTNER_FAIL
+    EDIT_NAME_PARTNER_REQUEST, EDIT_NAME_PARTNER_SUCCESS, EDIT_NAME_PARTNER_FAIL,
+    GET_NOTIFICATION_REQUEST, GET_NOTIFICATION_SUCCESS, GET_NOTIFICATION_FAIL,
+    CREATE_NOTIFICATION_REQUEST, CREATE_NOTIFICATION_SUCCESS, CREATE_NOTIFICATION_FAIL,
+    ACTIVED_SYNCCODE_REQUEST, ACTIVED_SYNCCODE_SUCCESS, ACTIVED_SYNCCODE_FAIL
 } from '../configs/ActionTypes'
 import axios from 'axios'
 import moment from 'moment'
@@ -342,6 +345,90 @@ export function requestUpdateNamePartner(name) {
             console.log(err)
             dispatch({
                 type: EDIT_NAME_PARTNER_FAIL
+            })
+        })
+    }
+}
+
+export function requestGetNotification() {
+    return (dispatch) => {
+        dispatch({
+            type: GET_NOTIFICATION_REQUEST
+        })
+        return axios.request({
+            url: `http://192.168.37.103:3000/api/notification`,
+            method: 'get'
+        },
+        ).then(res => {
+            dispatch({
+                payload: res.data.results,
+                type: GET_NOTIFICATION_SUCCESS
+            })
+        }).catch(err => {
+            console.log(err)
+            dispatch({
+                type: GET_NOTIFICATION_FAIL
+            })
+        })
+    }
+}
+
+export function requestSendSyncCode(syncCode) {
+
+    var formData = new FormData()
+    formData.append('syncCodePartner', syncCode)
+
+    return (dispatch) => {
+        dispatch({
+            type: CREATE_NOTIFICATION_REQUEST
+        })
+        return axios.request({
+            url: `http://192.168.37.103:3000/api/notification`,
+            method: 'post',
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        },
+        ).then(res => {
+            dispatch(
+                requestGetNamePartner(), {
+                type: CREATE_NOTIFICATION_SUCCESS
+            })
+        }).catch(err => {
+            console.log(err)
+            dispatch({
+                type: CREATE_NOTIFICATION_FAIL
+            })
+        })
+    }
+}
+
+export function requestActivedSyncCode(id) {
+
+    var formData = new FormData()
+    formData.append('notificationID', id)
+
+    return (dispatch) => {
+        dispatch({
+            type: ACTIVED_SYNCCODE_REQUEST
+        })
+        return axios.request({
+            url: `http://192.168.37.103:3000/api/notification/actived`,
+            method: 'post',
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        },
+        ).then(res => {
+            dispatch({
+                type: ACTIVED_SYNCCODE_SUCCESS
+            })
+        }).catch(err => {
+            console.log(err)
+            dispatch({
+                type: ACTIVED_SYNCCODE_FAIL
             })
         })
     }

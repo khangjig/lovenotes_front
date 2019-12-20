@@ -10,6 +10,8 @@ import {
     Card,
     CardItem,
     Thumbnail,
+    Item,
+    Icon
 
 } from 'native-base'
 import { ToastAndroid, TextInput, Button, ActivityIndicator, View } from 'react-native'
@@ -36,7 +38,11 @@ class UserView extends Component {
         super(props)
         this.state = {
             nameValue: '',
+            password: '',
+            syncCode: '',
             visibleDialogChangeUserName: false,
+            visibleDialogChangePassword: false,
+            visibleDialogSync: false,
             avatarSource: {
                 uri: null
             }
@@ -77,12 +83,63 @@ class UserView extends Component {
         this.setState({
             visibleDialogChangeUserName: false
         })
+    }
+
+    submitDialogChangeUserName = () => {
+        this.setState({
+            visibleDialogChangeUserName: false
+        })
         this.props.changeUsername(this.state.nameValue)
     }
 
     onChangeUserName = (e) => {
         this.setState({
             nameValue: e
+        })
+    }
+
+    showDialogChangePassword = () => {
+        this.setState({
+            visibleDialogChangePassword: true,
+            password: null
+        })
+    }
+
+    hideDialogChangePassword = () => {
+        this.setState({
+            visibleDialogChangePassword: false
+        })
+    }
+
+    onChangePassword = (e) => {
+        this.setState({
+            password: e
+        })
+    }
+
+    showDialogSync = () => {
+        this.setState({
+            visibleDialogSync: true,
+            syncCode: null
+        })
+    }
+
+    hideDialogSync = () => {
+        this.setState({
+            visibleDialogSync: false
+        })
+    }
+
+    submitDialogSync = () => {
+        this.setState({
+            visibleDialogSync: false
+        })
+        this.props.sendSyncCode(this.state.syncCode)
+    }
+
+    onChangeSync = (e) => {
+        this.setState({
+            syncCode: e
         })
     }
 
@@ -109,6 +166,10 @@ class UserView extends Component {
         })
     }
 
+    acceptSync = (id) => {
+        this.props.activedSyncCode(id)
+    }
+
     render() {
         return (
             <Provider>
@@ -117,14 +178,41 @@ class UserView extends Component {
                         <Dialog
                             visible={this.state.visibleDialogChangeUserName}
                             onDismiss={this.hideDialogChangeUserName}>
-                            {/* <Dialog.Title>Alert</Dialog.Title> */}
                             <Dialog.Content>
                                 <TextInput style={{ borderBottomColor: Colors.mainColor, borderBottomWidth: 1, fontFamily: Fonts.rixLoveFool, fontSize: 20 }}
                                     value={this.state.nameValue}
+                                    placeholder='type your name'
                                     onChangeText={this.onChangeUserName} />
                             </Dialog.Content>
                             <Dialog.Actions>
-                                <Button title='Done' onPress={this.hideDialogChangeUserName} color={Colors.mainColor} style={{ fontFamily: Fonts.rixLoveFool }} />
+                                <Button title='Done' onPress={this.submitDialogChangeUserName} color={Colors.mainColor} style={{ fontFamily: Fonts.rixLoveFool }} />
+                            </Dialog.Actions>
+                        </Dialog>
+                        <Dialog
+                            visible={this.state.visibleDialogChangePassword}
+                            onDismiss={this.hideDialogChangePassword}>
+                            {/* <Dialog.Title>Alert</Dialog.Title> */}
+                            <Dialog.Content>
+                                <TextInput style={{ borderBottomColor: Colors.mainColor, borderBottomWidth: 1, fontFamily: Fonts.rixLoveFool, fontSize: 20 }}
+                                    value={this.state.password}
+                                    placeholder='type your new password'
+                                    onChangeText={this.onChangePassword} />
+                            </Dialog.Content>
+                            <Dialog.Actions>
+                                <Button title='Done' onPress={this.hideDialogChangePassword} color={Colors.mainColor} style={{ fontFamily: Fonts.rixLoveFool }} />
+                            </Dialog.Actions>
+                        </Dialog>
+                        <Dialog
+                            visible={this.state.visibleDialogSync}
+                            onDismiss={this.hideDialogSync}>
+                            <Dialog.Content>
+                                <TextInput style={{ borderBottomColor: Colors.mainColor, borderBottomWidth: 1, fontFamily: Fonts.rixLoveFool, fontSize: 20 }}
+                                    value={this.state.syncCode}
+                                    placeholder='Sync code partner'
+                                    onChangeText={this.onChangeSync} />
+                            </Dialog.Content>
+                            <Dialog.Actions>
+                                <Button title='Done' onPress={this.submitDialogSync} color={Colors.mainColor} style={{ fontFamily: Fonts.rixLoveFool }} />
                             </Dialog.Actions>
                         </Dialog>
                     </Portal>
@@ -149,6 +237,22 @@ class UserView extends Component {
                                 </Body>
                             </CardItem>
                         </Card>
+
+                        {
+                            this.props.notificationInfo !== null ?
+                                <View>
+                                    {
+                                        this.props.notificationInfo.map(x =>
+                                            <Item key={x.id} style={{ padding: 20, backgroundColor: '#F6CD8B', flexDirection: 'row', justifyContent: 'space-between', borderRadius: 25 }}>
+                                                <Text style={{ fontFamily: Fonts.rixLoveFool }}>{x.content}</Text>
+                                                <Icon name='ios-arrow-dropright' onPress={() => this.acceptSync(x.id)} />
+                                            </Item>
+                                        )
+                                    }
+                                </View>
+                                : null
+                        }
+
 
                         <ListItem onPress={this.chooseImageFromGallery}>
                             <Body>
@@ -212,7 +316,7 @@ class UserView extends Component {
                             }
                         </ListItem>
 
-                        <ListItem onPress={this.show_Toast}>
+                        <ListItem onPress={this.showDialogSync}>
                             <Body>
                                 <Text style={{ fontFamily: Fonts.rixLoveFool, fontSize: 16 }}>
                                     Sync Code
@@ -225,10 +329,10 @@ class UserView extends Component {
                             </Right>
                         </ListItem>
 
-                        <ListItem onPress={this.show_Toast}>
+                        <ListItem onPress={this.showDialogChangePassword}>
                             <Body>
                                 <Text style={{ fontFamily: Fonts.rixLoveFool, fontSize: 16 }}>
-                                    Password
+                                    Change Password
                                 </Text>
                             </Body>
                         </ListItem>
