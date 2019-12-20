@@ -8,7 +8,10 @@ import {
     BY_WEEK_REQUEST, BY_WEEK_SUCCESS, BY_WEEK_FAIL
 } from '../configs/ActionTypes'
 import axios from 'axios'
+import moment from 'moment'
+
 const FormData = require('form-data')
+
 
 export function requestGetListNotes() {
     return (dispatch) => {
@@ -33,14 +36,14 @@ export function requestGetListNotes() {
     }
 }
 
-export function requestAddNote(title, content, listImage) {
+export function requestAddNote(title, content, listImage, date, notifi) {
 
     let formData = new FormData
     formData.append('title', title)
     formData.append('content', content)
-    formData.append('anniversary', '12/1/2018')
+    formData.append('anniversary', moment(date).format('YYYY/MM/DD'))
     formData.append('hidden', false)
-    formData.append('alarm', true)
+    formData.append('alarm', notifi)
     listImage.forEach((image) => {
         const file = {
             name: Math.floor(Math.random() * Math.floor(999999999)) + '.jpg',
@@ -65,6 +68,7 @@ export function requestAddNote(title, content, listImage) {
         ).then(res => {
             dispatch(
                 requestGetListNotes(), {
+                payload: 'Add Successfully!',
                 type: ADD_NOTE_SUCCESS
             })
         }).catch(err => {

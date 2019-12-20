@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { Container, Form, Input, Item, Card, Right, Icon, Textarea, Thumbnail, Body, Content, CardItem, View, DatePicker } from 'native-base'
-import { TouchableOpacity, Text, Alert, ToastAndroid, TouchableHighlight } from 'react-native'
+import { TouchableOpacity, Text, TouchableHighlight } from 'react-native'
 import ImagePicker from 'react-native-image-picker'
 import moment from 'moment'
 
 import { Fonts, Colors } from '../styles/App'
-import Toast from '../components/ToastComponent'
 
 
 const options = {
@@ -21,13 +20,19 @@ class NoteWrittingView extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            visible: false,
-            reset: null,
             index: 0,
             title: null,
             content: null,
-            list: []
+            list: [],
+            date: null,
+            notifi: true
         }
+    }
+
+    componentDidMount() {
+        this.setState({
+            date: new Date(moment().format('YYYY/MM/DD'))
+        })
     }
 
     chooseImageFromGallery = () => {
@@ -52,34 +57,8 @@ class NoteWrittingView extends Component {
         })
     }
 
-    showAlert = () => {
-        Alert.alert(
-            'Try again',
-            'Camera not working',
-            [
-                { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-                { text: 'OK', onPress: () => console.log('OK Pressed') },
-            ],
-            { cancelable: false }
-        )
-    }
-
-    showToast = () => {
-        this.setState({
-            visible: true
-        }, () => {
-            this.hideToast()
-        })
-    }
-
-    hideToast = () => {
-        this.setState({
-            visible: false
-        })
-    }
-
     submitForm = () => {
-        this.props.addNote(this.state.title, this.state.content, this.state.list)
+        this.props.addNote(this.state.title, this.state.content, this.state.list, this.state.date, this.state.notifi)
     }
 
     deleteImage = (e) => {
@@ -109,17 +88,18 @@ class NoteWrittingView extends Component {
     }
 
     setAnniversary = (newDate) => {
-        // this.props.changeLoveDay(newDate)
+        this.setState({
+            date: newDate
+        })
     }
 
     setNotification = () => {
-        // this.props.changeLoveDay(newDate)
+        this.state.notifi ? this.setState({ notifi: false }) : this.setState({ notifi: true })
     }
 
     render() {
         return (
             <Container>
-                <Toast visible={this.state.visible} message='Saved' />
                 <Content padder>
                     <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-between' }}>
                         <View>
@@ -145,7 +125,7 @@ class NoteWrittingView extends Component {
                                     shadowColor: 0,
                                     elevation: 0,
                                 }}>
-                                <Icon name="md-notifications" style={{ color: Colors.greyColor }} />
+                                <Icon name="md-notifications" style={{ color: this.state.notifi ? Colors.mainColor : Colors.greyColor }} />
                             </TouchableOpacity>
                         </View>
                     </View>

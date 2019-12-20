@@ -20,7 +20,8 @@ const initialState = {
     noteInfo: null,
     listNoteImages: null,
     listNoteOnThisDay: null,
-    listNoteByWeek:null
+    listNoteByWeek: null,
+    message: null
 }
 
 const noteReducer = (state = initialState, action) => {
@@ -50,6 +51,7 @@ const noteReducer = (state = initialState, action) => {
         case ADD_NOTE_SUCCESS:
             return {
                 ...state,
+                message: action.payload,
                 isLoadingAddNote: false
             }
         case ADD_NOTE_FAIL:
@@ -124,7 +126,7 @@ const noteReducer = (state = initialState, action) => {
                 ...state,
                 isLoadingGetNoteOnThisDay: false
             }
-            
+
         case BY_WEEK_REQUEST:
             return {
                 ...state,

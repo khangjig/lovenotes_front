@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import { TouchableOpacity } from 'react-native'
+import { View } from 'react-native'
 import { connect } from 'react-redux'
-import { Icon } from 'native-base'
 
 import { Fonts, Colors } from '../styles/App'
+import { requestAddNote } from '../actions/NoteAction'
 import NoteWrittingView from '../views/NoteWrittingView'
-import {
-  requestAddNote
-} from '../actions/NoteAction'
+import Toast from '../components/ToastComponent'
 
 
 class NoteWrittingContainer extends Component {
@@ -15,9 +13,9 @@ class NoteWrittingContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      notification: false
+      allowed: null,
+      visible: false
     }
-    this.status = false
   }
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -40,40 +38,37 @@ class NoteWrittingContainer extends Component {
         color: Colors.mainColor,
         fontWeight: undefined,
         fontSize: 30,
-      },
-      headerRight: <TouchableOpacity
-        onPress={navigation.getParam('notifi')}
-        style={{
-          backgroundColor: 'transparent',
-          alignSelf: 'center',
-          marginRight: 18,
-          shadowColor: 0,
-          elevation: 0,
-        }}>
-        <Icon name="md-notifications" style={{ color: Colors.greyColor }} />
-      </TouchableOpacity>
+      }
     }
   }
 
-  componentDidMount() {
-    this.props.navigation.setParams({ notifi: this.turnONOFFNotification })
+  hideToast = () => {
+    this.setState({
+      visible: false
+    })
   }
 
-  addNote = (title, content, listImage) => {
-    this.props.requestAddNote(title, content, listImage)
-  }
+  addNote = async (title, content, listImage, date, notifi) => {
 
-  turnONOFFNotification = () => {
-    console.log("turnONOFFNotification ")
+    await this.props.requestAddNote(title, content, listImage, date, notifi)
+
+    if (this.props.messages !== null) {
+      this.setState({
+        visible: true
+      }, () => {
+        this.hideToast()
+        this.props.navigation.goBack()
+      })
+    }
   }
 
   render() {
     return (
-      <NoteWrittingView
-        {...this.props}
-        {...this.state}
-        addNote={(title, content, listImage) => this.addNote(title, content, listImage)}
-      />
+        <NoteWrittingView
+          {...this.props}
+          {...this.state}
+          addNote={(title, content, listImage, date, notifi) => this.addNote(title, content, listImage, date, notifi)}
+        />
     )
   }
 }
@@ -85,7 +80,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  requestAddNote: (title, content, listImage) => dispatch(requestAddNote(title, content, listImage)),
+  requestAddNote: (title, content, listImage, date, notifi) => dispatch(requestAddNote(title, content, listImage, date, notifi)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NoteWrittingContainer)
