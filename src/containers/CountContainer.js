@@ -8,7 +8,11 @@ import {
   requestGetAvatarUsers,
   requestEditLoveDay,
   requestUpdateAvatarUsers,
-  requestEditUsername
+  requestEditUsername,
+  requestGetAvatarPartner,
+  requestGetNamePartner,
+  requestUpdateAvatarPartner,
+  requestUpdateNamePartner
 } from '../actions/UserAction'
 
 class CountContainer extends Component {
@@ -40,6 +44,8 @@ class CountContainer extends Component {
   componentDidMount() {
     this.props.requestGetUsers()
     this.props.requestGetAvatarUsers()
+    this.props.requestGetAvatarPartner()
+    this.props.requestGetNamePartner()
   }
 
   changeAvatar = (image) => {
@@ -52,6 +58,14 @@ class CountContainer extends Component {
 
   changeLoveDay = (loveday) => {
     this.props.requestEditLoveDay(loveday)
+  }
+
+  changeAvatarPartner = (image)=>{
+    this.props.requestUpdateAvatarPartner(image)
+  }
+
+  changeNamePartner = (name)=>{
+    this.props.requestUpdateNamePartner(name)
   }
 
   render() {
@@ -77,6 +91,11 @@ const mapDispatchToProps = dispatch => ({
   requestEditUsername: (name) => dispatch(requestEditUsername(name)),
   requestEditLoveDay: (loveDay) => dispatch(requestEditLoveDay(loveDay)),
   requestEditBirthday: (birthday) => dispatch(requestEditBirthday(birthday)),
+
+  requestGetAvatarPartner: () => dispatch(requestGetAvatarPartner()),
+  requestGetNamePartner: () => dispatch(requestGetNamePartner()),
+  requestUpdateAvatarPartner: (image) => dispatch(requestUpdateAvatarPartner(image)),
+  requestUpdateNamePartner: (name) => dispatch(requestUpdateNamePartner(name)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CountContainer)

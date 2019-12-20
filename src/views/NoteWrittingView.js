@@ -1,41 +1,56 @@
 import React, { Component } from 'react'
-import {
-    Container,
-    Form,
-    Input,
-    Item,
-    Card,
-    Right,
-    Icon,
-    Textarea,
-    Thumbnail,
-    Body,
-    Content,
-    CardItem,
-    View,
-} from 'native-base'
-import { TouchableOpacity, Text, Alert, ToastAndroid } from 'react-native'
-import { ImagePicker } from 'react-native-image-picker'
+import { Container, Form, Input, Item, Card, Right, Icon, Textarea, Thumbnail, Body, Content, CardItem, View, } from 'native-base'
+import { TouchableOpacity, Text, Alert, ToastAndroid, TouchableHighlight } from 'react-native'
+import ImagePicker from 'react-native-image-picker'
 
 import { Fonts, Colors } from '../styles/App'
 import Toast from '../components/ToastComponent'
+
+
+const options = {
+    title: 'Select Image',
+    storageOptions: {
+        skipBackup: true,
+        path: 'images',
+    },
+}
 
 class NoteWrittingView extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            allowed: null,
-            image : null,
-            visible: false
+            visible: false,
+            reset: null,
+            index: 0
         }
-        this.chooseImageFromGallery = this.chooseImageFromGallery.bind(this)
     }
 
-    chooseImageFromGallery() {
-        ImagePicker.openSelectDialog({}, imageUri => {
-            this.setState({ image: imageUri })
-        }, error => console.error(error))
+    static defaultProps = {
+        listImage: []
+    }
+
+    chooseImageFromGallery = () => {
+        ImagePicker.showImagePicker(options, (response) => {
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker')
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error)
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton)
+            } else {
+
+                this.props.listImage.push({
+                    uri: response.uri,
+                    index: this.state.index
+                })
+
+                this.setState({
+                    index: this.state.index + 1
+                })
+            }
+        })
     }
 
     showAlert = () => {
@@ -64,34 +79,44 @@ class NoteWrittingView extends Component {
         })
     }
 
+    submitForm = () => {
+        this.props.addNote(this.props.listImage)
+    }
+
+    deleteImage = (e) => {
+        delete this.props.listImage[e]
+        this.setState({
+            reset: null
+        })
+    }
+
     render() {
+        console.log(this.props)
         return (
             <Container>
-                <Toast visible={this.state.visible} message= 'Saved' />
+                <Toast visible={this.state.visible} message='Saved' />
                 <Content padder>
                     <Form>
                         <Item>
-                            <Input placeholder=" Title . . . " style={{ fontFamily: Fonts.fiolexGirl }}/>
+                            <Input placeholder=" Title . . . " style={{ fontFamily: Fonts.fiolexGirl }} />
                         </Item>
                     </Form>
                     <Card>
                         <CardItem>
-                            <Body style={{flexDirection:'row', flexWrap:'wrap'}}>
-                                <Thumbnail square large source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
-                                <Thumbnail square large source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
-                                {/* <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
-                                <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
-                                <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
-                                <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
-                                <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
-                                <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
-                                <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>                                
-                                <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/>
-                                <Thumbnail square small source={require('../assets/images/travel4.jpg')} style={{margin: 1}}/> */}
+                            <Body style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                                {
+                                    this.props.listImage !== null ?
+                                        this.props.listImage.map(x =>
+                                            <TouchableHighlight key={x.index} onPress={() => this.deleteImage(x.index)}>
+                                                <Thumbnail square large source={{ uri: x.uri }} style={{ margin: 1 }} />
+                                            </TouchableHighlight>
+                                        ) : null
+                                }
+
                             </Body>
                             <Right>
                                 <TouchableOpacity
-                                    onPress={this.showAlert}>
+                                    onPress={this.chooseImageFromGallery}>
                                     <Icon name="md-camera" style={{ color: 'white', backgroundColor: Colors.mainColor, padding: 20, borderRadius: 30 }} />
                                 </TouchableOpacity>
                             </Right>
@@ -110,7 +135,7 @@ class NoteWrittingView extends Component {
                             borderRadius: 25,
                             width: 100,
                         }}
-                        onPress={this.showToast}>
+                        onPress={this.submitForm}>
                         <Text
                             style={{
                                 fontFamily: Fonts.fiolexGirl,

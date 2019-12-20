@@ -5,12 +5,16 @@ import {
     GET_AVATAR_REQUEST, GET_AVATAR_REQUEST_SUCCESS, GET_AVATAR_REQUEST_FAIL,
     EDIT_USERNAME_REQUEST, EDIT_USERNAME_REQUEST_SUCCESS, EDIT_USERNAME_REQUEST_FAIL,
     EDIT_LOVEDAY_REQUEST, EDIT_LOVEDAY_REQUEST_SUCCESS, EDIT_LOVEDAY_REQUEST_FAIL,
-    EDIT_BIRTHDAY_REQUEST, EDIT_BIRTHDAY_REQUEST_SUCCESS,EDIT_BIRTHDAY_REQUEST_FAIL,
-    UPDATE_AVATAR_REQUEST, UPDATE_AVATAR_REQUEST_SUCCESS, UPDATE_AVATAR_REQUEST_FAIL
-
+    EDIT_BIRTHDAY_REQUEST, EDIT_BIRTHDAY_REQUEST_SUCCESS, EDIT_BIRTHDAY_REQUEST_FAIL,
+    UPDATE_AVATAR_REQUEST, UPDATE_AVATAR_REQUEST_SUCCESS, UPDATE_AVATAR_REQUEST_FAIL,
+    GET_NAME_PARTNER_REQUEST, GET_NAME_PARTNER_SUCCESS, GET_NAME_PARTNER_FAIL,
+    GET_AVATAR_PARTNER_REQUEST, GET_AVATAR_PARTNER_SUCCESS, GET_AVATAR_PARTNER_FAIL,
+    UPDATE_AVATAR_PARTNER_REQUEST, UPDATE_AVATAR_PARTNER_SUCCESS, UPDATE_AVATAR_PARTNER_FAIL,
+    EDIT_NAME_PARTNER_REQUEST, EDIT_NAME_PARTNER_SUCCESS, EDIT_NAME_PARTNER_FAIL
 } from '../configs/ActionTypes'
 import axios from 'axios'
 import moment from 'moment'
+
 const FormData = require('form-data')
 
 export function requestGetUsers() {
@@ -78,9 +82,9 @@ export function requestEditUsername(name) {
         },
         ).then(res => {
             dispatch(
-                requestGetUsers(),{
-                    type: EDIT_USERNAME_REQUEST_SUCCESS
-                })
+                requestGetUsers(), {
+                type: EDIT_USERNAME_REQUEST_SUCCESS
+            })
         }).catch(err => {
             dispatch({
                 type: EDIT_USERNAME_REQUEST_FAIL
@@ -108,9 +112,9 @@ export function requestEditLoveDay(loveday) {
         },
         ).then(res => {
             dispatch(
-                requestGetUsers(),{
-                    type: EDIT_LOVEDAY_REQUEST_SUCCESS
-                })
+                requestGetUsers(), {
+                type: EDIT_LOVEDAY_REQUEST_SUCCESS
+            })
         }).catch(err => {
             dispatch({
                 type: EDIT_LOVEDAY_REQUEST_FAIL
@@ -138,9 +142,9 @@ export function requestEditBirthday(birthday) {
         },
         ).then(res => {
             dispatch(
-                requestGetUsers(),{
-                    type: EDIT_BIRTHDAY_REQUEST_SUCCESS
-                })
+                requestGetUsers(), {
+                type: EDIT_BIRTHDAY_REQUEST_SUCCESS
+            })
         }).catch(err => {
             dispatch({
                 type: EDIT_BIRTHDAY_REQUEST_FAIL
@@ -224,6 +228,120 @@ export function requestUpdateAvatarUsers(image) {
             console.log(err)
             dispatch({
                 type: UPDATE_AVATAR_REQUEST_FAIL
+            })
+        })
+    }
+}
+
+export function requestGetAvatarPartner() {
+    return (dispatch) => {
+        dispatch({
+            type: GET_AVATAR_PARTNER_REQUEST
+        })
+        return axios.request({
+            url: `http://192.168.37.103:3000/api/partner/avatar`,
+            method: 'get'
+        },
+        ).then(res => {
+            dispatch({
+                type: GET_AVATAR_PARTNER_SUCCESS,
+                payload: res.data.results
+            })
+        }).catch(err => {
+            console.log(err)
+            dispatch({
+                type: GET_AVATAR_PARTNER_FAIL
+            })
+        })
+    }
+}
+
+export function requestGetNamePartner() {
+    return (dispatch) => {
+        dispatch({
+            type: GET_NAME_PARTNER_REQUEST
+        })
+        return axios.request({
+            url: `http://192.168.37.103:3000/api/partner/name`,
+            method: 'get'
+        },
+        ).then(res => {
+            dispatch({
+                type: GET_NAME_PARTNER_SUCCESS,
+                payload: res.data.results
+            })
+        }).catch(err => {
+            console.log(err)
+            dispatch({
+                type: GET_NAME_PARTNER_FAIL
+            })
+        })
+    }
+}
+
+export function requestUpdateAvatarPartner(image) {
+
+    let formData = new FormData
+    formData.append('userId', 1)
+    formData.append('avatar', {
+        name: image.fileName,
+        uri: Platform.OS === 'android' ? image.uri : image.uri.replace('file://', ''),
+        type: 'image/jpeg',
+    })
+
+
+    return (dispatch) => {
+        dispatch({
+            type: UPDATE_AVATAR_PARTNER_REQUEST
+        })
+        return axios.request({
+            url: `http://192.168.37.103:3000/api/partner/change-avatar`,
+            method: 'post',
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        },
+        ).then(res => {
+            dispatch(
+                requestGetAvatarPartner(), {
+                type: UPDATE_AVATAR_PARTNER_SUCCESS
+            })
+        }).catch(err => {
+            console.log(err)
+            dispatch({
+                type: UPDATE_AVATAR_PARTNER_FAIL
+            })
+        })
+    }
+}
+
+export function requestUpdateNamePartner(name) {
+
+    var formData = new FormData()
+    formData.append('newname', name)
+
+    return (dispatch) => {
+        dispatch({
+            type: EDIT_NAME_PARTNER_REQUEST
+        })
+        return axios.request({
+            url: `http://192.168.37.103:3000/api/partner/change-name`,
+            method: 'patch',
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        },
+        ).then(res => {
+            dispatch(
+                requestGetNamePartner(), {
+                type: EDIT_NAME_PARTNER_SUCCESS
+            })
+        }).catch(err => {
+            console.log(err)
+            dispatch({
+                type: EDIT_NAME_PARTNER_FAIL
             })
         })
     }

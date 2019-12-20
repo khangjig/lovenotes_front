@@ -32,22 +32,23 @@ class CountView extends Component {
         return monthNames[monthIndex] + ' ' + day + ', ' + year
     }
 
-    levelOfLove = (day1, day2) =>{
+    levelOfLove = (day1, day2) => {
         let days = this.getNumberFromTwoDay(day1, day2)
-        
-        if(days > 1000)
+
+        if (days > 1000)
             return 'Truly Love'
-        else if(days > 500)
+        else if (days > 500)
             return 'Intense Love'
-        else if(days >30)
+        else if (days > 30)
             return 'Loving... '
-        else if(days <= 30)
+        else if (days <= 30)
             return 'Beginning'
 
         return null
     }
 
     render() {
+        console.log(this.props)
         return (
             <Container>
                 <Grid>
@@ -153,12 +154,22 @@ class CountView extends Component {
                             <Col size={11}>
                                 <Row size={3}>
                                     <Col>
-                                        <Thumbnail large source={require('../assets/icons/girl_couple2.png')} style={{ alignSelf: 'center', marginTop: 30, width: 100, height: 100 }} />
+                                        {/* <Thumbnail large source={require('../assets/icons/girl_couple2.png')} style={{ alignSelf: 'center', marginTop: 30, width: 100, height: 100 }} /> */}
+                                        {
+                                            this.props.isLoadingGetAvatarPartner ?
+                                                <View style={{ width: 70, height: 70, alignSelf: 'center', justifyContent: 'center' }}>
+                                                    <ActivityIndicator size="small" color={Colors.mainColor} />
+                                                </View>
+                                                :
+                                                <Thumbnail large circular source={{ uri: 'data:image/png;base64,' + this.props.avatarPartner }} style={{ alignSelf: 'center', marginTop: 30, width: 100, height: 100 }} />
+                                        }
                                     </Col>
                                 </Row>
                                 <Row size={1}>
                                     <Col>
-                                        <Text style={{ color: 'grey', fontSize: 20, fontFamily: Fonts.fiolexGirl, alignSelf: 'center', flex: 1 }}>Camila Cabello</Text>
+                                        <Text style={{ color: 'grey', fontSize: 20, fontFamily: Fonts.fiolexGirl, alignSelf: 'center', flex: 1 }}>
+                                            {this.props.namePartner}
+                                        </Text>
                                     </Col>
                                 </Row>
                             </Col>

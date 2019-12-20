@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import{ TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { Icon } from 'native-base'
 
@@ -15,32 +15,36 @@ class NoteWrittingContainer extends Component {
       title: params ? params.otherParam : 'Writting...',
       headerTintColor: Colors.mainColor,
       headerStyle: {
-          backgroundColor: 'white',
-          shadowOpacity: 0,
-          elevation: 0,
-          borderBottomWidth: 0.7,
-          borderColor: Colors.mainColor,
+        backgroundColor: 'white',
+        shadowOpacity: 0,
+        elevation: 0,
+        borderBottomWidth: 0.7,
+        borderColor: Colors.mainColor,
       },
       headerTitleStyle: {
-          textAlign: 'center',
-          flex: 1,
-          fontFamily: Fonts.rixLoveFool,
-          fontWeight: '300',
-          color: Colors.mainColor,
-          fontWeight: undefined,
-          fontSize: 30,
+        textAlign: 'center',
+        flex: 1,
+        fontFamily: Fonts.rixLoveFool,
+        fontWeight: '300',
+        color: Colors.mainColor,
+        fontWeight: undefined,
+        fontSize: 30,
       },
       headerRight: <TouchableOpacity
-          style={{
-              backgroundColor: 'transparent',
-              alignSelf: 'center',
-              marginRight: 18,
-              shadowColor: 0,
-              elevation: 0,
-          }}>
-          <Icon name="md-notifications" style={{ color: Colors.mainColor }} />
+        style={{
+          backgroundColor: 'transparent',
+          alignSelf: 'center',
+          marginRight: 18,
+          shadowColor: 0,
+          elevation: 0,
+        }}>
+        <Icon name="md-notifications" style={{ color: Colors.mainColor }} />
       </TouchableOpacity>
     }
+  }
+
+  addNote = (e) => {
+    console.log("list - ", e)
   }
 
   render() {
@@ -48,6 +52,7 @@ class NoteWrittingContainer extends Component {
       <NoteWrittingView
         {...this.props}
         {...this.state}
+        addNote={(birthday) => this.addNote(birthday)}
       />
     )
   }

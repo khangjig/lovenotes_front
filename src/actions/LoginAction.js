@@ -7,6 +7,7 @@ import axios from 'axios'
 import AsyncStorage from '@react-native-community/async-storage'
 
 import { ACCESS_TOKEN_ASYNCSTORAGE, REFRESH_TOKEN_ASYNCSTORAGE } from '../configs/config'
+var jwtDecode = require('jwt-decode')
 
 export function requestGetToken(username, password) {
     return (dispatch) => {
@@ -28,6 +29,8 @@ export function requestGetToken(username, password) {
             AsyncStorage.setItem(ACCESS_TOKEN_ASYNCSTORAGE, res.data.accessToken)
             AsyncStorage.setItem(REFRESH_TOKEN_ASYNCSTORAGE, res.data.refreshToken)
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.accessToken
+            
+            console.log(jwtDecode(res.data.accessToken))
 
             dispatch({
                 type: LOGIN_REQUEST_SUCCESS,
