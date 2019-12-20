@@ -69,8 +69,9 @@ class UserContainer extends Component {
     this.props.requestSendSyncCode(syncCode)
   }
 
-  activedSyncCode = (id) => {
-    this.props.requestActivedSyncCode(id)
+  activedSyncCode = async (id) => {
+    await this.props.requestActivedSyncCode(id)
+    !this.props.isLoadingActivedSyncCode ? this.props.navigation.navigate('Login') : null
   }
 
   render() {

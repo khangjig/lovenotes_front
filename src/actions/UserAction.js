@@ -391,8 +391,7 @@ export function requestSendSyncCode(syncCode) {
             }
         },
         ).then(res => {
-            dispatch(
-                requestGetNamePartner(), {
+            dispatch({
                 type: CREATE_NOTIFICATION_SUCCESS
             })
         }).catch(err => {

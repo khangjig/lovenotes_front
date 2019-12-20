@@ -42,11 +42,21 @@ class OnThisDayView extends Component {
     }
 
     convertTitle = (str) => {
-        return str.substring(0, 20) + ' . . .'
+        if (str.lenght < 20) {
+            return str
+        }
+        else {
+            return str.substring(0, 20) + ' . . .'
+        }
     }
 
     convertContent = (str) => {
-        return str.substring(0, 28) + ' . . .'
+        if (str.lenght < 28) {
+            return str
+        }
+        else {
+            return str.substring(0, 28) + ' . . .'
+        }
     }
 
     render() {
