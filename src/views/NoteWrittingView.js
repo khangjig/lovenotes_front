@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Form, Input, Item, Card, Right, Icon, Textarea, Thumbnail, Body, Content, CardItem, View, DatePicker } from 'native-base'
-import { TouchableOpacity, Text, TouchableHighlight } from 'react-native'
+import { TouchableOpacity, Text, TouchableHighlight, ActivityIndicator } from 'react-native'
 import ImagePicker from 'react-native-image-picker'
 import moment from 'moment'
 
@@ -28,7 +28,8 @@ class NoteWrittingView extends Component {
             date: null,
             notifi: true,
             visible: false,
-            message: null
+            message: null,
+            loader: false
         }
     }
 
@@ -87,6 +88,9 @@ class NoteWrittingView extends Component {
         }
         else {
             this.props.addNote(this.state.title, this.state.content, this.state.list, this.state.date, this.state.notifi)
+            this.setState({
+                loader: true
+            })
         }
     }
 
@@ -221,6 +225,23 @@ class NoteWrittingView extends Component {
                         </Text>
                     </TouchableOpacity>
                 </Content>
+                {
+                    this.state.loader ?
+                        <View style={{
+                            position: 'absolute',
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: 'rgba(220, 220, 220, 0.4)'
+                        }}>
+                            <ActivityIndicator size='large' color={Colors.mainColor} />
+                        </View>
+                        : null
+                }
+
             </Container>
         )
     }
