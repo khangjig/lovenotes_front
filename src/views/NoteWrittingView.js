@@ -4,6 +4,7 @@ import { TouchableOpacity, Text, TouchableHighlight } from 'react-native'
 import ImagePicker from 'react-native-image-picker'
 import moment from 'moment'
 
+import Toast from '../components/ToastComponent'
 import { Fonts, Colors } from '../styles/App'
 
 
@@ -25,13 +26,21 @@ class NoteWrittingView extends Component {
             content: null,
             list: [],
             date: null,
-            notifi: true
+            notifi: true,
+            visible: false,
+            message: null
         }
     }
 
     componentDidMount() {
         this.setState({
             date: new Date(moment().format('YYYY/MM/DD'))
+        })
+    }
+
+    hideToast = () => {
+        this.setState({
+            visible: false
         })
     }
 
@@ -58,7 +67,27 @@ class NoteWrittingView extends Component {
     }
 
     submitForm = () => {
-        this.props.addNote(this.state.title, this.state.content, this.state.list, this.state.date, this.state.notifi)
+        if (this.state.title === null || this.state.content === null) {
+            if (this.state.title === null) {
+                this.setState({
+                    visible: true,
+                    message: 'Title not null!'
+                }, () => {
+                    this.hideToast()
+                })
+            }
+            else if (this.state.content === null) {
+                this.setState({
+                    visible: true,
+                    message: 'Content not null!'
+                }, () => {
+                    this.hideToast()
+                })
+            }
+        }
+        else {
+            this.props.addNote(this.state.title, this.state.content, this.state.list, this.state.date, this.state.notifi)
+        }
     }
 
     deleteImage = (e) => {
@@ -100,6 +129,7 @@ class NoteWrittingView extends Component {
     render() {
         return (
             <Container>
+                <Toast visible={this.state.visible} message={this.state.message} />
                 <Content padder>
                     <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-between' }}>
                         <View>
