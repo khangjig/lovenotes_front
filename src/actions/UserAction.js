@@ -156,7 +156,9 @@ export function requestEditBirthday(birthday) {
     }
 }
 
-export function requestAddUsers() {
+export function requestAddUsers(email, password, viewName, birthday) {
+    
+    console.log(email, password, viewName, birthday)
     return (dispatch) => {
         dispatch({
             type: ADD_USERS_REQUEST
@@ -167,8 +169,7 @@ export function requestAddUsers() {
         },
         ).then(res => {
             dispatch({
-                type: ADD_USERS_REQUEST_SUCCESS,
-                payload: res.data.results
+                type: ADD_USERS_REQUEST_SUCCESS
             })
         }).catch(err => {
             dispatch({

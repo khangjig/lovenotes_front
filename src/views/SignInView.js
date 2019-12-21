@@ -37,7 +37,7 @@ class SignInView extends Component {
         return (
             <View style={{ paddingTop: '50%', paddingLeft: '10%', paddingRight: '10%' }}>
                 <TextInput
-                    placeholder="Username"
+                    placeholder="Email"
                     onChangeText={this.onChangeUsername}
                     style={styles.textInput}
                 />

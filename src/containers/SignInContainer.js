@@ -6,7 +6,6 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { ACCESS_TOKEN_ASYNCSTORAGE, REFRESH_TOKEN_ASYNCSTORAGE } from '../configs/config'
 import { requestGetToken } from '../actions/LoginAction'
 
-import { Fonts, Colors } from '../styles/App'
 import SignInView from '../views/SignInView'
 import Toast from '../components/ToastComponent'
 

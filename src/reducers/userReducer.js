@@ -18,6 +18,7 @@ import {
 
 const initialState = {
     isLoadingGetUser: true,
+    isLoadingAddUser: true,
     isLoadingGetAvatar: true,
     isLoadingUpdateAvatar: true,
     isLoadingUpdateUsername: true,
@@ -57,6 +58,23 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoadingGetUser: false
+            }
+        //add user
+        case ADD_USERS_REQUEST:
+            return {
+                ...state,
+                isLoadingAddUser: true
+            }
+        case ADD_USERS_REQUEST_SUCCESS:
+            return {
+                ...state,
+                isLoadingAddUser: false
+
+            }
+        case ADD_USERS_REQUEST_FAIL:
+            return {
+                ...state,
+                isLoadingAddUser: false
             }
         //update avatar user
         case UPDATE_AVATAR_REQUEST:
