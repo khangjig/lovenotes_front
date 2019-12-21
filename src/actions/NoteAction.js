@@ -67,7 +67,9 @@ export function requestAddNote(title, content, listImage, date, notifi) {
         },
         ).then(res => {
             dispatch(
-                requestGetListNotes(), {
+                requestGetListNotes(),
+                requestGetNoteOnThisDay(),
+                requestGetNoteByWeek(), {
                 payload: 'Add Successfully!',
                 type: ADD_NOTE_SUCCESS
             })

@@ -323,7 +323,7 @@ export function requestUpdateAvatarPartner(image) {
 export function requestUpdateNamePartner(name) {
 
     var formData = new FormData()
-    formData.append('newname', name)
+    formData.append('name', name)
 
     return (dispatch) => {
         dispatch({

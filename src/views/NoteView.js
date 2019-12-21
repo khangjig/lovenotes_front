@@ -25,6 +25,7 @@ class NoteView extends Component {
     }
 
     render() {
+        console.log(this.props)
         return (
             <Container>
                 <Content>
@@ -52,7 +53,7 @@ class NoteView extends Component {
                                                         <Text note style={{ fontFamily: Fonts.fiolexGirl }}>{convertContent(e.content)} </Text>
                                                     </Body>
                                                     <Right>
-                                                        <Text note style={{ fontFamily: Fonts.fiolexGirl, fontSize: 15 }}>{convertDate(e.date)}</Text>
+                                                        <Text note style={{ fontFamily: Fonts.fiolexGirl, fontSize: 15 }}>{convertDate(e.anniversary)}</Text>
                                                     </Right>
                                                 </ListItem>
                                             </View> :
@@ -70,7 +71,7 @@ class NoteView extends Component {
                                                         <Text note style={{ fontFamily: Fonts.fiolexGirl }}>{convertContent(e.content)} </Text>
                                                     </Body>
                                                     <Right>
-                                                        <Text note style={{ fontFamily: Fonts.fiolexGirl, fontSize: 15 }}>{convertDate(e.date)}</Text>
+                                                        <Text note style={{ fontFamily: Fonts.fiolexGirl, fontSize: 15 }}>{convertDate(e.anniversary)}</Text>
                                                     </Right>
                                                 </ListItem>
                                             </View>

@@ -71,11 +71,12 @@ class OnThisDayView extends Component {
                                                             <Text note style={{ fontFamily: Fonts.rixLoveFool, color: 'white', alignSelf: 'center', marginTop: -2 }}>{this.getYear(e.anniversary)}</Text>
                                                         </Right>
                                                     </CardItem>
-
-                                                    <CardItem cardBody style={{ backgroundColor: Colors.mainColor }} >
-                                                        <Image source={{ uri: 'data:image/png;base64,' + e.firstImage }} style={{ height: 200, width: null, flex: 1, margin: 5 }} />
-                                                    </CardItem>
-
+                                                    {
+                                                        !e.firstImage === null ?
+                                                            <CardItem cardBody style={{ backgroundColor: Colors.mainColor }} >
+                                                                <Image source={{ uri: 'data:image/png;base64,' + e.firstImage }} style={{ height: 200, width: null, flex: 1, margin: 5 }} />
+                                                            </CardItem> : null
+                                                    }
                                                     <CardItem style={{ backgroundColor: Colors.mainColor }}>
                                                         <Body>
                                                             <Text style={{ alignSelf: 'center', fontFamily: Fonts.fiolexGirl, fontSize: 20, color: 'white' }}>{this.getNumberYears(e.anniversary)}</Text>

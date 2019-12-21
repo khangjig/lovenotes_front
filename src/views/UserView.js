@@ -171,6 +171,7 @@ class UserView extends Component {
     }
 
     render() {
+        console.log(this.props)
         return (
             <Provider>
                 <Container>
@@ -316,18 +317,22 @@ class UserView extends Component {
                             }
                         </ListItem>
 
-                        <ListItem onPress={this.showDialogSync}>
-                            <Body>
-                                <Text style={{ fontFamily: Fonts.rixLoveFool, fontSize: 16 }}>
-                                    Sync Code
+                        {
+                            this.props.userInfo.partnerId === 0 ?
+                                <ListItem onPress={this.showDialogSync}>
+                                    <Body>
+                                        <Text style={{ fontFamily: Fonts.rixLoveFool, fontSize: 16 }}>
+                                            Sync Code
                                 </Text>
-                            </Body>
-                            <Right>
-                                <Text style={{ fontFamily: Fonts.rixLoveFool, color: Colors.mainColor, fontSize: 16 }}>
-                                    {this.props.userInfo.syncCode}
-                                </Text>
-                            </Right>
-                        </ListItem>
+                                    </Body>
+                                    <Right>
+                                        <Text style={{ fontFamily: Fonts.rixLoveFool, color: Colors.mainColor, fontSize: 16 }}>
+                                            {this.props.userInfo.syncCode}
+                                        </Text>
+                                    </Right>
+                                </ListItem>
+                                : null
+                        }
 
                         <ListItem onPress={this.showDialogChangePassword}>
                             <Body>

@@ -60,11 +60,11 @@ class CountContainer extends Component {
     this.props.requestEditLoveDay(loveday)
   }
 
-  changeAvatarPartner = (image)=>{
+  changeAvatarPartner = (image) => {
     this.props.requestUpdateAvatarPartner(image)
   }
 
-  changeNamePartner = (name)=>{
+  changeNamePartner = (name) => {
     this.props.requestUpdateNamePartner(name)
   }
 
@@ -73,6 +73,10 @@ class CountContainer extends Component {
       <CountView
         {...this.props}
         {...this.state}
+        changeAvatar={(image) => this.changeAvatar(image)}
+        changeUsername={(name) => this.changeUsername(name)}
+        changeAvatarPartner={(image) => this.changeAvatarPartner(image)}
+        changeNamePartner={(name) => this.changeNamePartner(name)}
       />
     )
   }
