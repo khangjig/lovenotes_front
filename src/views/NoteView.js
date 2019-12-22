@@ -25,7 +25,6 @@ class NoteView extends Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             <Container>
                 <Content>
@@ -44,7 +43,7 @@ class NoteView extends Component {
                                                     onLongPress={() => this.deleteNote(e.id)}
                                                     onPress={() => this.props.navigation.navigate('ShowNotes', { itemId: e.id, otherParam: convertTitle(e.title) })}>
                                                     <Left>
-                                                        <View style={{ width: 52, height: 52, borderWidth: 1, borderColor: 'blue', padding: 1, alignContent: 'center', justifyContent: 'center' }}>
+                                                        <View style={{ width: 52, height: 52, borderWidth: 1, borderColor: 'rgb(52, 225, 235)', padding: 1, alignContent: 'center', justifyContent: 'center' }}>
                                                             <Thumbnail style={{ width: 50, height: 50, alignSelf: 'center' }} square source={{ uri: 'data:image/png;base64,' + e.firstImage }} />
                                                         </View>
                                                     </Left>

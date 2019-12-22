@@ -157,22 +157,33 @@ export function requestEditBirthday(birthday) {
 }
 
 export function requestAddUsers(email, password, viewName, birthday) {
-    
-    console.log(email, password, viewName, birthday)
+
     return (dispatch) => {
         dispatch({
             type: ADD_USERS_REQUEST
         })
         return axios.request({
-            url: ``,
-            method: 'post'
+            url: `http://192.168.37.103:3000/api/users`,
+            method: 'post',
+            data: {
+                email: email,
+                password: password,
+                name: viewName,
+                birthday: birthday
+            }
         },
         ).then(res => {
             dispatch({
+                payload: res.data,
                 type: ADD_USERS_REQUEST_SUCCESS
             })
         }).catch(err => {
+            console.log(err)
             dispatch({
+                payload: {
+                    status: 400,
+                    messages: 'Email not invalid!'
+                },
                 type: ADD_USERS_REQUEST_FAIL
             })
         })

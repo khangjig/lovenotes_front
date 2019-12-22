@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View } from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
 
 import Toast from '../components/ToastComponent'
 import RegisterView from '../views/RegisterView'
 import { requestAddUsers } from '../actions/UserAction'
+import { Colors } from '../styles/App'
 
 class RegisterContainer extends Component {
 
@@ -13,7 +14,8 @@ class RegisterContainer extends Component {
         super(props)
         this.state = {
             visible: false,
-            message: null
+            message: null,
+            loader: false
         }
     }
 
@@ -24,27 +26,52 @@ class RegisterContainer extends Component {
     }
 
     submitFrom = async (email, password, viewName, birthday) => {
+
+        this.setState({
+            loader: true
+        })
+
         await this.props.requestAddUsers(email, password, viewName, birthday)
 
-        if (this.props.messages !== null) {
+        if (this.props.message !== null && !this.props.isLoadingAddUser) {
             this.setState({
                 visible: true,
-                message: this.props.messages
+                message: this.props.message.messages,
+                loader: false
             }, () => {
                 this.hideToast()
             })
-            this.props.navigation.navigate('App')
+
+            if (this.props.message.status === '200') {
+                this.props.navigation.goBack()
+            }
         }
     }
     render() {
         return (
-            <View>
+            <View style={{ flex: 1 }}>
                 <Toast visible={this.state.visible} message={this.state.message} />
                 <RegisterView
                     {...this.props}
                     {...this.state}
                     submitFrom={(email, password, viewName, birthday) => this.submitFrom(email, password, viewName, birthday)}
                 />
+                {
+                    this.state.loader ?
+                        <View style={{
+                            position: 'absolute',
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: 'rgba(220, 220, 220, 0.4)'
+                        }}>
+                            <ActivityIndicator size='large' color={Colors.mainColor} />
+                        </View>
+                        : null
+                }
             </View>
         )
     }

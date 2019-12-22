@@ -4,7 +4,7 @@ import { Image, TouchableHighlight, View, ActivityIndicator } from 'react-native
 import moment from 'moment'
 
 import { Fonts, Colors } from '../styles/App'
-import { convertContent, convertTitle } from '../helpers/ConvertData'
+import { convertContent, convertTitle, convertDate } from '../helpers/ConvertData'
 
 
 class OnThisDayView extends Component {
@@ -72,7 +72,7 @@ class OnThisDayView extends Component {
                                                         </Right>
                                                     </CardItem>
                                                     {
-                                                        !e.firstImage === null ?
+                                                        e.firstImage !== null ?
                                                             <CardItem cardBody style={{ backgroundColor: Colors.mainColor }} >
                                                                 <Image source={{ uri: 'data:image/png;base64,' + e.firstImage }} style={{ height: 200, width: null, flex: 1, margin: 5 }} />
                                                             </CardItem> : null
@@ -115,7 +115,7 @@ class OnThisDayView extends Component {
                                                             <Text note style={{ fontFamily: Fonts.fiolexGirl }}>{convertTitle(e.content)}</Text>
                                                         </Body>
                                                         <Right>
-                                                            <Text note style={{ fontFamily: Fonts.fiolexGirl, fontSize: 15 }}>Tomorow</Text>
+                                                            <Text note style={{ fontFamily: Fonts.fiolexGirl, fontSize: 15 }}>{convertDate(e.anniversary)}</Text>
                                                         </Right>
                                                     </ListItem>
                                                 )

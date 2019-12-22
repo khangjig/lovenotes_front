@@ -68,12 +68,14 @@ const userReducer = (state = initialState, action) => {
         case ADD_USERS_REQUEST_SUCCESS:
             return {
                 ...state,
+                message: action.payload,
                 isLoadingAddUser: false
 
             }
         case ADD_USERS_REQUEST_FAIL:
             return {
                 ...state,
+                message: action.payload,
                 isLoadingAddUser: false
             }
         //update avatar user

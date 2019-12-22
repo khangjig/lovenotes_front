@@ -236,7 +236,7 @@ class CountView extends Component {
                                         </Col>
                                     </Row>
                                 </Col>
-                                <Image source={require('../assets/icons/bg_heart3.png')} style={{ alignSelf: 'center', marginTop: -25, marginLeft: 6, position: 'absolute' }} />
+                                <Image source={require('../assets/icons/bg_heart3.png')} style={{ alignSelf: 'center', position: 'absolute', resizeMode:'cover'}} />
                             </Row>
 
                             <Row size={1} >
