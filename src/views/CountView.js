@@ -6,6 +6,7 @@ import { Dialog, Portal, Provider } from 'react-native-paper'
 import ImagePicker from 'react-native-image-picker'
 import moment from 'moment'
 
+import { convertDate } from '../helpers/ConvertData'
 import { Fonts, Colors } from '../styles/App'
 
 const options = {
@@ -33,22 +34,6 @@ class CountView extends Component {
         dayTwo = new Date(moment(day2).format('YYYY/MM/DD'))
 
         return (dayTwo.getTime() - dayOne.getTime()) / (1000 * 3600 * 24)
-    }
-
-    convertDate = (date) => {
-        var date = new Date(moment(date).format('YYYY/MM/DD'))
-        var monthNames = [
-            "Jan", "Feb", "Mar",
-            "Apr", "May", "Jun", "Jul",
-            "Aug", "Sep", "Oct",
-            "Nov", "Dec"
-        ]
-
-        var day = date.getDate()
-        var monthIndex = date.getMonth()
-        var year = date.getFullYear()
-
-        return monthNames[monthIndex] + ' ' + day + ', ' + year
     }
 
     levelOfLove = (day1, day2) => {
@@ -236,7 +221,7 @@ class CountView extends Component {
                                         </Col>
                                     </Row>
                                 </Col>
-                                <Image source={require('../assets/icons/bg_heart3.png')} style={{ alignSelf: 'center', position: 'absolute', resizeMode:'cover'}} />
+                                <Image source={require('../assets/icons/bg_heart3.png')} style={{ alignSelf: 'center', position: 'absolute', resizeMode: 'cover' }} />
                             </Row>
 
                             <Row size={1} >
@@ -246,7 +231,7 @@ class CountView extends Component {
                                     <Row>
                                         <Col>
                                             <Text style={{ color: '#ff1b00', fontSize: 20, fontFamily: Fonts.fiolexGirl, alignSelf: 'center', marginTop: -22 }}>
-                                                {this.convertDate(this.props.userInfo.loveDate)} - {this.convertDate(Date.now())}
+                                                {convertDate(this.props.userInfo.loveDate)} - {convertDate(Date.now())}
                                             </Text>
                                         </Col>
                                     </Row>

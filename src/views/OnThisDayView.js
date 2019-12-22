@@ -4,7 +4,7 @@ import { Image, TouchableHighlight, View, ActivityIndicator } from 'react-native
 import moment from 'moment'
 
 import { Fonts, Colors } from '../styles/App'
-import { convertContent, convertTitle, convertDate } from '../helpers/ConvertData'
+import { convertContent, convertTitle, convertDate, convertOnThisDay } from '../helpers/ConvertData'
 
 
 class OnThisDayView extends Component {
@@ -112,10 +112,10 @@ class OnThisDayView extends Component {
                                                         </Left>
                                                         <Body>
                                                             <Text style={{ fontFamily: Fonts.fiolexGirl, fontSize: 18 }}>{convertTitle(e.title)}</Text>
-                                                            <Text note style={{ fontFamily: Fonts.fiolexGirl }}>{convertTitle(e.content)}</Text>
+                                                            <Text note style={{ fontFamily: Fonts.fiolexGirl }}>{convertContent(e.content)}</Text>
                                                         </Body>
                                                         <Right>
-                                                            <Text note style={{ fontFamily: Fonts.fiolexGirl, fontSize: 15 }}>{convertDate(e.anniversary)}</Text>
+                                                            <Text note style={{ fontFamily: Fonts.fiolexGirl, fontSize: 15 }}>{convertOnThisDay(e.anniversary)}</Text>
                                                         </Right>
                                                     </ListItem>
                                                 )
