@@ -50,7 +50,7 @@ class NoteWrittingContainer extends Component {
 
   addNote = async (title, content, listImage, date, notifi) => {
 
-    await this.props.requestAddNote(title, content, listImage, date, notifi)
+    await this.props.requestAddNote(title, content, listImage, date, notifi, this.props.navigation.state.params.pageData)
 
     if (this.props.messages !== null) {
       this.setState({
@@ -80,7 +80,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  requestAddNote: (title, content, listImage, date, notifi) => dispatch(requestAddNote(title, content, listImage, date, notifi)),
+  requestAddNote: (title, content, listImage, date, notifi, pageData) => dispatch(requestAddNote(title, content, listImage, date, notifi, pageData)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NoteWrittingContainer)

@@ -1,5 +1,6 @@
 import {
     GET_LIST_NOTE_REQUEST, GET_LIST_NOTE_SUCCESS, GET_LIST_NOTE_FAIL,
+    GET_MORE_NOTE_REQUEST, GET_MORE_NOTE_SUCCESS, GET_MORE_NOTE_FAIL,
     ADD_NOTE_REQUEST, ADD_NOTE_SUCCESS, ADD_NOTE_FAIL,
     GET_NOTE_INFO_REQUEST, GET_NOTE_INFO_SUCCESS, GET_NOTE_INFO_FAIL,
     DELETE_NOTE_REQUEST, DELETE_NOTE_SUCCESS, DELETE_NOTE_FAIL,
@@ -10,6 +11,7 @@ import {
 
 const initialState = {
     isLoadingGetListNote: true,
+    isLoadingGetMoreNote: true,
     isLoadingAddNote: true,
     isLoadingGetNoteInfo: true,
     isLoadingDeleteNote: true,
@@ -41,6 +43,23 @@ const noteReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoadingGetListNote: false
+            }
+
+        case GET_MORE_NOTE_REQUEST:
+            return {
+                ...state,
+                isLoadingGetMoreNote: true
+            }
+        case GET_MORE_NOTE_SUCCESS:
+            return {
+                ...state,
+                listNote: action.payload,
+                isLoadingGetMoreNote: false
+            }
+        case GET_MORE_NOTE_FAIL:
+            return {
+                ...state,
+                isLoadingGetMoreNote: false
             }
 
         case ADD_NOTE_REQUEST:

@@ -1,5 +1,6 @@
 import {
     GET_LIST_NOTE_REQUEST, GET_LIST_NOTE_SUCCESS, GET_LIST_NOTE_FAIL,
+    GET_MORE_NOTE_REQUEST, GET_MORE_NOTE_SUCCESS, GET_MORE_NOTE_FAIL,
     ADD_NOTE_REQUEST, ADD_NOTE_SUCCESS, ADD_NOTE_FAIL,
     GET_NOTE_INFO_REQUEST, GET_NOTE_INFO_SUCCESS, GET_NOTE_INFO_FAIL,
     DELETE_NOTE_REQUEST, DELETE_NOTE_SUCCESS, DELETE_NOTE_FAIL,
@@ -13,14 +14,18 @@ import moment from 'moment'
 const FormData = require('form-data')
 
 
-export function requestGetListNotes() {
+export function requestGetListNotes(pageData) {
     return (dispatch) => {
         dispatch({
             type: GET_LIST_NOTE_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/note/list?page=1&size=10`,
-            method: 'get'
+            url: `http://192.168.37.103:3000/api/note/list`,
+            method: 'get',
+            params: {
+                page: pageData.page,
+                size: pageData.size
+            }
         },
         ).then(res => {
             dispatch({
@@ -36,7 +41,34 @@ export function requestGetListNotes() {
     }
 }
 
-export function requestAddNote(title, content, listImage, date, notifi) {
+export function requestGetMoreNotes(pageData) {
+    return (dispatch) => {
+        dispatch({
+            type: GET_MORE_NOTE_REQUEST
+        })
+        return axios.request({
+            url: `http://192.168.37.103:3000/api/note/list`,
+            method: 'get',
+            params: {
+                page: pageData.page,
+                size: pageData.size
+            }
+        },
+        ).then(res => {
+            dispatch({
+                type: GET_MORE_NOTE_SUCCESS,
+                payload: res.data.results
+            })
+        }).catch(err => {
+            console.log(err)
+            dispatch({
+                type: GET_MORE_NOTE_FAIL
+            })
+        })
+    }
+}
+
+export function requestAddNote(title, content, listImage, date, notifi, pageData) {
 
     let formData = new FormData
     formData.append('title', title)
@@ -67,7 +99,7 @@ export function requestAddNote(title, content, listImage, date, notifi) {
         },
         ).then(res => {
             dispatch(
-                requestGetListNotes(),
+                requestGetListNotes(pageData),
                 requestGetNoteOnThisDay(),
                 requestGetNoteByWeek(), {
                 payload: 'Add Successfully!',
@@ -136,7 +168,7 @@ export function requestGetNoteImage(id) {
     }
 }
 
-export function requestDeleteNote(id) {
+export function requestDeleteNote(id, pageData) {
 
     var formData = new FormData()
     formData.append('id', id)
@@ -155,7 +187,7 @@ export function requestDeleteNote(id) {
         },
         ).then(res => {
             dispatch(
-                requestGetListNotes(), {
+                requestGetListNotes(pageData), {
                 type: DELETE_NOTE_SUCCESS
             })
         }).catch(err => {

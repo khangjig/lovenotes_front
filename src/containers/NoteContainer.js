@@ -8,6 +8,7 @@ import { Colors, Fonts } from '../styles/App'
 import NoteView from '../views/NoteView'
 import {
   requestGetListNotes,
+  requestGetMoreNotes,
   requestGetInfoNote,
   requestDeleteNote
 } from '../actions/NoteAction'
@@ -53,10 +54,17 @@ class NoteContainer extends Component {
   constructor(props) {
     super(props)
     this.userID = null
+    this.state = {
+      pageData: {
+        page: 1,
+        size: 10
+      },
+      loadmore: false
+    }
   }
 
   async componentDidMount() {
-    this.props.requestGetListNotes()
+    this.props.requestGetListNotes(this.state.pageData)
     this.userID = await AsyncStorage.getItem(USER_ID_ASYNCSTORAGE)
   }
 
@@ -65,7 +73,23 @@ class NoteContainer extends Component {
   }
 
   deleteNote = (id) => {
-    this.props.requestDeleteNote(id)
+    this.props.requestDeleteNote(id, this.state.pageData)
+  }
+
+  getMore = async () => {
+    this.setState({
+      loadmore: true,
+      pageData: {
+        page: this.state.pageData.page,
+        size: this.state.pageData.size + 10,
+      }
+    })
+
+    await this.props.requestGetMoreNotes({ page: this.state.pageData.page, size: this.state.pageData.size + 10 })
+
+    this.setState({
+      loadmore: false
+    })
   }
 
   render() {
@@ -76,6 +100,7 @@ class NoteContainer extends Component {
         userId={this.userID}
         getNoteInfo={(id) => this.getNoteInfo(id)}
         deleteNote={(id) => this.deleteNote(id)}
+        getMore={() => this.getMore()}
       />
     )
   }
@@ -88,9 +113,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  requestGetListNotes: () => dispatch(requestGetListNotes()),
+  requestGetListNotes: (pageData) => dispatch(requestGetListNotes(pageData)),
+  requestGetMoreNotes: (pageData) => dispatch(requestGetMoreNotes(pageData)),
   requestGetInfoNote: (id) => dispatch(requestGetInfoNote(id)),
-  requestDeleteNote: (id) => dispatch(requestDeleteNote(id)),
+  requestDeleteNote: (id, pageData) => dispatch(requestDeleteNote(id, pageData)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NoteContainer)

@@ -24,10 +24,14 @@ class NoteView extends Component {
         )
     }
 
+    loadEnd = () => {
+        this.props.getMore()
+    }
+
     render() {
         return (
             <Container>
-                <Content>
+                <Content onTouchMove={this.loadEnd}>
                     {
                         this.props.isLoadingGetListNote ?
                             <View style={{ padding: '50%', alignSelf: 'center', justifyContent: 'center' }}>
@@ -79,11 +83,17 @@ class NoteView extends Component {
                                 }
                             </List>
                     }
+                    {
+                        this.props.loadmore ?
+                            <View style={{ paddingTop: 5, alignSelf: 'center', justifyContent: 'center' }}>
+                                <ActivityIndicator size="small" color={Colors.mainColor} />
+                            </View> : null
+                    }
 
                 </Content>
                 <Fab direction="up"
                     position="bottomRight"
-                    onPress={() => this.props.navigation.navigate('NotesWrittings')}
+                    onPress={() => this.props.navigation.navigate('NotesWrittings', { pageData: this.props.pageData })}
                     style={{ backgroundColor: Colors.mainColor }}>
                     <Icon name="md-add" />
                 </Fab>
