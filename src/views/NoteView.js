@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, View, ActivityIndicator } from 'react-native'
+import { Alert, View, ActivityIndicator, ScrollView } from 'react-native'
 import { Container, Right, Left, Icon, Text, List, ListItem, Body, Thumbnail, Fab, Content } from 'native-base'
 
 import { convertContent, convertTitle, convertDate } from '../helpers/ConvertData'
@@ -31,7 +31,7 @@ class NoteView extends Component {
     render() {
         return (
             <Container>
-                <Content onTouchMove={this.loadEnd}>
+                <ScrollView onScroll={this.loadEnd}>
                     {
                         this.props.isLoadingGetListNote ?
                             <View style={{ padding: '50%', alignSelf: 'center', justifyContent: 'center' }}>
@@ -85,12 +85,12 @@ class NoteView extends Component {
                     }
                     {
                         this.props.loadmore ?
-                            <View style={{ paddingTop: 5, alignSelf: 'center', justifyContent: 'center' }}>
+                            <View style={{ paddingTop: 30, alignSelf: 'center', justifyContent: 'center' }}>
                                 <ActivityIndicator size="small" color={Colors.mainColor} />
                             </View> : null
                     }
 
-                </Content>
+                </ScrollView>
                 <Fab direction="up"
                     position="bottomRight"
                     onPress={() => this.props.navigation.navigate('NotesWrittings', { pageData: this.props.pageData })}

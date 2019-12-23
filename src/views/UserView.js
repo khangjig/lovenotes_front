@@ -14,7 +14,7 @@ import {
     Icon
 
 } from 'native-base'
-import { ToastAndroid, TextInput, Button, ActivityIndicator, View } from 'react-native'
+import { TextInput, Button, ActivityIndicator, View, Alert } from 'react-native'
 import { Dialog, Portal, Provider } from 'react-native-paper'
 import ImagePicker from 'react-native-image-picker'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -55,15 +55,6 @@ class UserView extends Component {
 
     setBirthday = (newDate) => {
         this.props.changeBirthday(newDate)
-    }
-
-    show_Toast = () => {
-        console.log('click')
-        ToastAndroid.showWithGravity(
-            'Sucssed',
-            ToastAndroid.SHORT,
-            ToastAndroid.CENTER,
-        )
     }
 
     logout = async () => {
@@ -170,8 +161,30 @@ class UserView extends Component {
         this.props.activedSyncCode(id)
     }
 
+    denySync = (id) => {
+        this.props.denySyncCode(id)
+    }
+
+    cancelSync = () => {
+        this.props.cancelSyncCode(this.props.userInfo.partnerId)
+    }
+
+    alertCancelSync = () => {
+        Alert.alert(
+            'Cancel Sync',
+            'Are you sure ?',
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel',
+                },
+                { text: 'OK', onPress: this.cancelSync },
+            ],
+            { cancelable: false },
+        )
+    }
+
     render() {
-        console.log(this.props)
         return (
             <Provider>
                 <Container>
@@ -219,18 +232,18 @@ class UserView extends Component {
                     </Portal>
                     <Content>
                         <Card pointerEvents='none' style={{ height: 150 }}>
-                            <CardItem style={{ alignSelf: 'center', justifyContent: 'center' }} onPress={this.show_Toast}>
+                            <CardItem style={{ alignSelf: 'center', justifyContent: 'center' }} >
                                 {
                                     this.props.isLoadingGetAvatar ?
                                         <View style={{ width: 70, height: 70, alignSelf: 'center', justifyContent: 'center' }}>
                                             <ActivityIndicator size="small" color={Colors.mainColor} />
                                         </View>
                                         :
-                                        <Thumbnail large circular source={{ uri: 'data:image/png;base64,' + this.props.avatarUser }} />
+                                        <Thumbnail large circular source={{ uri: 'data:image/pngbase64,' + this.props.avatarUser }} />
                                 }
                             </CardItem>
 
-                            <CardItem onPress={this.show_Toast} style={{ marginTop: -10 }}>
+                            <CardItem style={{ marginTop: -10 }}>
                                 <Body>
                                     <Text style={{ alignSelf: 'center', fontFamily: Fonts.rixLoveFool, fontSize: 20, color: Colors.mainColor }}>
                                         {this.props.userInfo.name}
@@ -243,10 +256,11 @@ class UserView extends Component {
                             this.props.notificationInfo !== null ?
                                 <View>
                                     {
-                                        this.props.notificationInfo.map(x =>
-                                            <Item key={x.id} style={{ padding: 20, backgroundColor: '#F6CD8B', flexDirection: 'row', justifyContent: 'space-between', borderRadius: 25 }}>
-                                                <Text style={{ fontFamily: Fonts.rixLoveFool }}>{x.content}</Text>
-                                                <Icon name='ios-arrow-dropright' onPress={() => this.acceptSync(x.id)} />
+                                        this.props.notificationInfo.map(x => //'#F6CD8B'
+                                            <Item key={x.id} style={{ padding: 20, backgroundColor: Colors.mainColor, flexDirection: 'row', justifyContent: 'space-between', borderRadius: 25 }}>
+                                                <Icon name='md-close-circle' onPress={() => this.denySync(x.id)} style={{ color: 'white' }} />
+                                                <Text style={{ fontFamily: Fonts.rixLoveFool, color: 'white' }}>{x.title} : {x.content}</Text>
+                                                <Icon name='md-checkmark-circle' onPress={() => this.acceptSync(x.id)} style={{ color: 'white' }} />
                                             </Item>
                                         )
                                     }
@@ -317,6 +331,14 @@ class UserView extends Component {
                             }
                         </ListItem>
 
+                        <ListItem onPress={this.showDialogChangePassword}>
+                            <Body>
+                                <Text style={{ fontFamily: Fonts.rixLoveFool, fontSize: 16 }}>
+                                    Change Password
+                                </Text>
+                            </Body>
+                        </ListItem>
+
                         {
                             this.props.userInfo.partnerId === 0 ?
                                 <ListItem onPress={this.showDialogSync}>
@@ -331,16 +353,15 @@ class UserView extends Component {
                                         </Text>
                                     </Right>
                                 </ListItem>
-                                : null
+                                :
+                                <ListItem onPress={this.alertCancelSync}>
+                                    <Body>
+                                        <Text style={{ fontFamily: Fonts.rixLoveFool, fontSize: 16 }}>
+                                            Cancel Sync
+                                    </Text>
+                                    </Body>
+                                </ListItem>
                         }
-
-                        <ListItem onPress={this.showDialogChangePassword}>
-                            <Body>
-                                <Text style={{ fontFamily: Fonts.rixLoveFool, fontSize: 16 }}>
-                                    Change Password
-                                </Text>
-                            </Body>
-                        </ListItem>
 
                         <ListItem onPress={this.logout}>
                             <Body>

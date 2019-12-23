@@ -13,7 +13,9 @@ import {
     EDIT_NAME_PARTNER_REQUEST, EDIT_NAME_PARTNER_SUCCESS, EDIT_NAME_PARTNER_FAIL,
     GET_NOTIFICATION_REQUEST, GET_NOTIFICATION_SUCCESS, GET_NOTIFICATION_FAIL,
     CREATE_NOTIFICATION_REQUEST, CREATE_NOTIFICATION_SUCCESS, CREATE_NOTIFICATION_FAIL,
-    ACTIVED_SYNCCODE_REQUEST, ACTIVED_SYNCCODE_SUCCESS, ACTIVED_SYNCCODE_FAIL
+    ACTIVED_SYNCCODE_REQUEST, ACTIVED_SYNCCODE_SUCCESS, ACTIVED_SYNCCODE_FAIL,
+    DENY_SYNCCODE_REQUEST, DENY_SYNCCODE_SUCCESS, DENY_SYNCCODE_FAIL,
+    CANCEL_SYNCCODE_REQUEST, CANCEL_SYNCCODE_SUCCESS, CANCEL_SYNCCODE_FAIL
 } from '../configs/ActionTypes'
 import axios from 'axios'
 import moment from 'moment'
@@ -26,7 +28,7 @@ export function requestGetUsers() {
             type: GET_USERS_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/users`,
+            url: `http://192.168.37.104:3000/api/users`,
             method: 'get'
         },
         ).then(res => {
@@ -49,7 +51,7 @@ export function requestGetAvatarUsers() {
             type: GET_AVATAR_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/avatar/image-base64`,
+            url: `http://192.168.37.104:3000/api/avatar/image-base64`,
             method: 'get'
         },
         ).then(res => {
@@ -76,7 +78,7 @@ export function requestEditUsername(name) {
             type: EDIT_USERNAME_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/users/EditNameUser`,
+            url: `http://192.168.37.104:3000/api/users/EditNameUser`,
             method: 'patch',
             data: formData,
             headers: {
@@ -106,7 +108,7 @@ export function requestEditLoveDay(loveday) {
             type: EDIT_LOVEDAY_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/users/UpdateloveDay`,
+            url: `http://192.168.37.104:3000/api/users/UpdateloveDay`,
             method: 'patch',
             data: formData,
             headers: {
@@ -136,7 +138,7 @@ export function requestEditBirthday(birthday) {
             type: EDIT_BIRTHDAY_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/users/EditBirthday`,
+            url: `http://192.168.37.104:3000/api/users/EditBirthday`,
             method: 'patch',
             data: formData,
             headers: {
@@ -163,7 +165,7 @@ export function requestAddUsers(email, password, viewName, birthday) {
             type: ADD_USERS_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/users`,
+            url: `http://192.168.37.104:3000/api/users`,
             method: 'post',
             data: {
                 email: email,
@@ -227,7 +229,7 @@ export function requestUpdateAvatarUsers(image) {
             type: UPDATE_AVATAR_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/Avatar/updated`,
+            url: `http://192.168.37.104:3000/api/Avatar/updated`,
             method: 'post',
             data: formData,
             headers: {
@@ -254,7 +256,7 @@ export function requestGetAvatarPartner() {
             type: GET_AVATAR_PARTNER_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/partner/avatar`,
+            url: `http://192.168.37.104:3000/api/partner/avatar`,
             method: 'get'
         },
         ).then(res => {
@@ -277,7 +279,7 @@ export function requestGetNamePartner() {
             type: GET_NAME_PARTNER_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/partner/name`,
+            url: `http://192.168.37.104:3000/api/partner/name`,
             method: 'get'
         },
         ).then(res => {
@@ -310,7 +312,7 @@ export function requestUpdateAvatarPartner(image) {
             type: UPDATE_AVATAR_PARTNER_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/partner/change-avatar`,
+            url: `http://192.168.37.104:3000/api/partner/change-avatar`,
             method: 'post',
             data: formData,
             headers: {
@@ -341,7 +343,7 @@ export function requestUpdateNamePartner(name) {
             type: EDIT_NAME_PARTNER_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/partner/change-name`,
+            url: `http://192.168.37.104:3000/api/partner/change-name`,
             method: 'patch',
             data: formData,
             headers: {
@@ -368,7 +370,7 @@ export function requestGetNotification() {
             type: GET_NOTIFICATION_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/notification`,
+            url: `http://192.168.37.104:3000/api/notification`,
             method: 'get'
         },
         ).then(res => {
@@ -395,7 +397,7 @@ export function requestSendSyncCode(syncCode) {
             type: CREATE_NOTIFICATION_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/notification`,
+            url: `http://192.168.37.104:3000/api/notification`,
             method: 'post',
             data: formData,
             headers: {
@@ -425,7 +427,7 @@ export function requestActivedSyncCode(id) {
             type: ACTIVED_SYNCCODE_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/notification/actived`,
+            url: `http://192.168.37.104:3000/api/notification/actived`,
             method: 'post',
             data: formData,
             headers: {
@@ -440,6 +442,67 @@ export function requestActivedSyncCode(id) {
             console.log(err)
             dispatch({
                 type: ACTIVED_SYNCCODE_FAIL
+            })
+        })
+    }
+}
+
+export function requestDenySyncCode(id) {
+
+    var formData = new FormData()
+    formData.append('notificationID', id)
+
+    return (dispatch) => {
+        dispatch({
+            type: DENY_SYNCCODE_REQUEST
+        })
+        return axios.request({
+            url: `http://192.168.37.104:3000/api/notification/deny`,
+            method: 'post',
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        },
+        ).then(res => {
+            dispatch(
+                requestGetNotification(), {
+                type: DENY_SYNCCODE_SUCCESS
+            })
+        }).catch(err => {
+            console.log(err)
+            dispatch({
+                type: DENY_SYNCCODE_FAIL
+            })
+        })
+    }
+}
+
+export function requestCancelSyncCode(partnerID) {
+
+    var formData = new FormData()
+    formData.append('partnerID', partnerID)
+
+    return (dispatch) => {
+        dispatch({
+            type: CANCEL_SYNCCODE_REQUEST
+        })
+        return axios.request({
+            url: `http://192.168.37.104:3000/api/notification/cancelSync`,
+            method: 'post',
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        },
+        ).then(res => {
+            dispatch({
+                type: CANCEL_SYNCCODE_SUCCESS
+            })
+        }).catch(err => {
+            console.log(err)
+            dispatch({
+                type: CANCEL_SYNCCODE_FAIL
             })
         })
     }

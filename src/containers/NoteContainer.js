@@ -78,17 +78,15 @@ class NoteContainer extends Component {
 
   getMore = async () => {
     this.setState({
-      loadmore: true,
-      pageData: {
-        page: this.state.pageData.page,
-        size: this.state.pageData.size + 10,
-      }
+      loadmore: true
     })
 
     await this.props.requestGetMoreNotes({ page: this.state.pageData.page, size: this.state.pageData.size + 10 })
 
     this.setState({
-      loadmore: false
+      loadmore: false,
+      page: this.state.pageData.page,
+      size: this.state.pageData.size + 10,
     })
   }
 

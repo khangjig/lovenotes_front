@@ -13,7 +13,9 @@ import {
   requestEditUsername,
   requestGetNotification,
   requestSendSyncCode,
-  requestActivedSyncCode
+  requestActivedSyncCode,
+  requestDenySyncCode,
+  requestCancelSyncCode
 } from '../actions/UserAction'
 
 class UserContainer extends Component {
@@ -74,6 +76,15 @@ class UserContainer extends Component {
     !this.props.isLoadingActivedSyncCode ? this.props.navigation.navigate('Login') : null
   }
 
+  denySyncCode = (id) => {
+    this.props.requestDenySyncCode(id)
+  }
+
+  cancelSyncCode = async (partnerID) => {
+    await this.props.requestCancelSyncCode(partnerID)
+    !this.props.isLoadingCancelSyncCode ? this.props.navigation.navigate('Login') : null
+  }
+
   render() {
     return (
       <UserView
@@ -85,6 +96,8 @@ class UserContainer extends Component {
         changeBirthday={(birthday) => this.changeBirthday(birthday)}
         sendSyncCode={(syncCode) => this.sendSyncCode(syncCode)}
         activedSyncCode={(id) => this.activedSyncCode(id)}
+        denySyncCode={(id) => this.denySyncCode(id)}
+        cancelSyncCode={(partnerID) => this.cancelSyncCode(partnerID)}
       />
     )
   }
@@ -106,6 +119,8 @@ const mapDispatchToProps = dispatch => ({
   requestGetNotification: () => dispatch(requestGetNotification()),
   requestSendSyncCode: (syncCode) => dispatch(requestSendSyncCode(syncCode)),
   requestActivedSyncCode: (id) => dispatch(requestActivedSyncCode(id)),
+  requestDenySyncCode: (id) => dispatch(requestDenySyncCode(id)),
+  requestCancelSyncCode: (partnerID) => dispatch(requestCancelSyncCode(partnerID))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserContainer)

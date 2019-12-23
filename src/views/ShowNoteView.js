@@ -45,39 +45,44 @@ class ShowNoteView extends Component {
                 </CardItem>
                 {
                     !this.props.isLoadingGetNoteImages ?
-                        <View style={{ marginTop: 50 }}>
-                            <DeckSwiper
-                                dataSource={this.props.listNoteImages}
-                                renderItem={item =>
-                                    <Card>
-                                        <CardItem cardBody>
-                                            <Image
-                                                style={{ height: 300, flex: 1, resizeMode: "center" }}
-                                                source={{ uri: 'data:image/png;base64,' + item.image }}
-                                            />
-                                        </CardItem>
-                                    </Card>
-                                }
-                            />
+                        <View>
+                            {
+                                this.props.listNoteImages.length > 0 ?
+                                    <View style={{ marginTop: 50 }}>
+                                        <DeckSwiper
+                                            dataSource={this.props.listNoteImages}
+                                            renderItem={item =>
+                                                <Card>
+                                                    <CardItem cardBody>
+                                                        <Image
+                                                            style={{ height: 300, flex: 1, resizeMode: "center" }}
+                                                            source={{ uri: 'data:image/png;base64,' + item.image }}
+                                                        />
+                                                    </CardItem>
+                                                </Card>
+                                            }
+                                        />
+                                    </View> : null
+                            }
+                            <ScrollView style={{ marginTop: this.props.listNoteImages.length > 0 ? 300 : 50 }}>
+                                <CardItem >
+                                    <Body >
+                                        {
+                                            !this.props.isLoadingGetNoteInfo ?
+                                                <Text style={{ fontFamily: Fonts.rixLoveFool, marginTop: 5, textAlign: 'center', alignSelf: 'center' }}>
+                                                    {this.props.noteInfo.content}
+                                                </Text>
+                                                : null
+                                        }
+                                    </Body>
+                                </CardItem>
+                            </ScrollView>
                         </View> :
                         <View style={{ padding: '50%', alignSelf: 'center', justifyContent: 'center' }}>
                             <ActivityIndicator size="small" color={Colors.mainColor} />
                         </View>
 
                 }
-                <ScrollView style={{ marginTop: 300 }}>
-                    <CardItem >
-                        <Body >
-                            {
-                                !this.props.isLoadingGetNoteInfo ?
-                                    <Text style={{ fontFamily: Fonts.rixLoveFool, marginTop: 5, textAlign: 'center', alignSelf: 'center' }}>
-                                        {this.props.noteInfo.content}
-                                    </Text>
-                                    : null
-                            }
-                        </Body>
-                    </CardItem>
-                </ScrollView>
             </Container>
         )
     }

@@ -13,7 +13,9 @@ import {
     EDIT_NAME_PARTNER_REQUEST, EDIT_NAME_PARTNER_SUCCESS, EDIT_NAME_PARTNER_FAIL,
     GET_NOTIFICATION_REQUEST, GET_NOTIFICATION_SUCCESS, GET_NOTIFICATION_FAIL,
     CREATE_NOTIFICATION_REQUEST, CREATE_NOTIFICATION_SUCCESS, CREATE_NOTIFICATION_FAIL,
-    ACTIVED_SYNCCODE_REQUEST, ACTIVED_SYNCCODE_SUCCESS, ACTIVED_SYNCCODE_FAIL
+    ACTIVED_SYNCCODE_REQUEST, ACTIVED_SYNCCODE_SUCCESS, ACTIVED_SYNCCODE_FAIL,
+    DENY_SYNCCODE_REQUEST, DENY_SYNCCODE_SUCCESS, DENY_SYNCCODE_FAIL,
+    CANCEL_SYNCCODE_REQUEST, CANCEL_SYNCCODE_SUCCESS, CANCEL_SYNCCODE_FAIL
 } from '../configs/ActionTypes'
 
 const initialState = {
@@ -31,6 +33,8 @@ const initialState = {
     isLoadingGetNotification: true,
     isLoadingCreateNotificaton: true,
     isLoadingActivedSyncCode: true,
+    isLoadingDenySyncCode: true,
+    isLoadingCancelSyncCode: true,
     userInfo: [],
     avatarUser: null,
     message: null,
@@ -279,7 +283,38 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 isLoadingActivedSyncCode: false
             }
-
+        //deny synccode
+        case DENY_SYNCCODE_REQUEST:
+            return {
+                ...state,
+                isLoadingDenySyncCode: true
+            }
+        case DENY_SYNCCODE_SUCCESS:
+            return {
+                ...state,
+                isLoadingDenySyncCode: false
+            }
+        case DENY_SYNCCODE_FAIL:
+            return {
+                ...state,
+                isLoadingDenySyncCode: false
+            }
+        //cancel synccode
+        case CANCEL_SYNCCODE_REQUEST:
+            return {
+                ...state,
+                isLoadingCancelSyncCode: true
+            }
+        case CANCEL_SYNCCODE_SUCCESS:
+            return {
+                ...state,
+                isLoadingCancelSyncCode: false
+            }
+        case CANCEL_SYNCCODE_FAIL:
+            return {
+                ...state,
+                isLoadingCancelSyncCode: false
+            }
         default:
             return state
     }

@@ -20,7 +20,7 @@ export function requestGetListNotes(pageData) {
             type: GET_LIST_NOTE_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/note/list`,
+            url: `http://192.168.37.104:3000/api/note/list`,
             method: 'get',
             params: {
                 page: pageData.page,
@@ -47,7 +47,7 @@ export function requestGetMoreNotes(pageData) {
             type: GET_MORE_NOTE_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/note/list`,
+            url: `http://192.168.37.104:3000/api/note/list`,
             method: 'get',
             params: {
                 page: pageData.page,
@@ -90,7 +90,7 @@ export function requestAddNote(title, content, listImage, date, notifi, pageData
             type: ADD_NOTE_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/note`,
+            url: `http://192.168.37.104:3000/api/note`,
             method: 'post',
             data: formData,
             headers: {
@@ -121,7 +121,7 @@ export function requestGetInfoNote(id) {
             type: GET_NOTE_INFO_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/note/getinfo`,
+            url: `http://192.168.37.104:3000/api/note/getinfo`,
             method: 'get',
             params: {
                 id: id
@@ -148,7 +148,7 @@ export function requestGetNoteImage(id) {
             type: GET_NOTE_IMAGES_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/noteimage/list`,
+            url: `http://192.168.37.104:3000/api/noteimage/list`,
             method: 'get',
             params: {
                 noteId: id
@@ -178,7 +178,7 @@ export function requestDeleteNote(id, pageData) {
             type: DELETE_NOTE_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/note`,
+            url: `http://192.168.37.104:3000/api/note`,
             method: 'delete',
             data: formData,
             headers: {
@@ -206,7 +206,7 @@ export function requestGetNoteOnThisDay() {
             type: ON_THIS_DAY_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/note/onthisday`,
+            url: `http://192.168.37.104:3000/api/note/onthisday`,
             method: 'get'
         },
         ).then(res => {
@@ -230,7 +230,7 @@ export function requestGetNoteByWeek() {
             type: BY_WEEK_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.103:3000/api/note/byweek`,
+            url: `http://192.168.37.104:3000/api/note/byweek`,
             method: 'get'
         },
         ).then(res => {
