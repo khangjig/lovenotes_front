@@ -40,12 +40,23 @@ export const convertTitle = (str) => {
 }
 
 export const convertContent = (str) => {
-    if (str.length < 28) {
-        return str
+    if (str.split("\n").length > 0) {
+        let arrayStr = str.split("\n")
+        if (arrayStr[0].length < 28) {
+            return arrayStr[0] + ' . . .'
+        }
+        else {
+            return arrayStr[0].substring(0, 28) + ' . . .'
+        }
     }
-    else {
-        return str.substring(0, 28) + ' . . .'
-    }
+    else
+
+        if (str.length < 28) {
+            return str
+        }
+        else {
+            return str.substring(0, 28) + ' . . .'
+        }
 }
 
 export const convertOnThisDay = (date) => {

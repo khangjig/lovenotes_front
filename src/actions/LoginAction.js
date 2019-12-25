@@ -1,8 +1,4 @@
-import {
-    LOGIN_REQUEST,
-    LOGIN_REQUEST_SUCCESS,
-    LOGIN_REQUEST_FAIL
-} from '../configs/ActionTypes'
+import { LOGIN_REQUEST, LOGIN_REQUEST_SUCCESS, LOGIN_REQUEST_FAIL } from '../configs/ActionTypes'
 import axios from 'axios'
 import AsyncStorage from '@react-native-community/async-storage'
 
@@ -20,7 +16,7 @@ export function requestGetToken(username, password) {
             type: LOGIN_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.104:3000/auth/token`,
+            url: `https://notelovesserver20191224084100.azurewebsites.net/auth/token`,
             method: 'post',
             data: {
                 email: username,

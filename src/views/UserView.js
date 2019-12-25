@@ -239,7 +239,7 @@ class UserView extends Component {
                                             <ActivityIndicator size="small" color={Colors.mainColor} />
                                         </View>
                                         :
-                                        <Thumbnail large circular source={{ uri: 'data:image/pngbase64,' + this.props.avatarUser }} />
+                                        <Thumbnail large circular source={{ uri: 'data:image/png;base64,' + this.props.avatarUser }} />
                                 }
                             </CardItem>
 

@@ -28,7 +28,7 @@ export function requestGetUsers() {
             type: GET_USERS_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.104:3000/api/users`,
+            url: `https://notelovesserver20191224084100.azurewebsites.net/api/users`,
             method: 'get'
         },
         ).then(res => {
@@ -51,7 +51,7 @@ export function requestGetAvatarUsers() {
             type: GET_AVATAR_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.104:3000/api/avatar/image-base64`,
+            url: `https://notelovesserver20191224084100.azurewebsites.net/api/avatar/image-base64`,
             method: 'get'
         },
         ).then(res => {
@@ -78,7 +78,7 @@ export function requestEditUsername(name) {
             type: EDIT_USERNAME_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.104:3000/api/users/EditNameUser`,
+            url: `https://notelovesserver20191224084100.azurewebsites.net/api/users/EditNameUser`,
             method: 'patch',
             data: formData,
             headers: {
@@ -108,7 +108,7 @@ export function requestEditLoveDay(loveday) {
             type: EDIT_LOVEDAY_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.104:3000/api/users/UpdateloveDay`,
+            url: `https://notelovesserver20191224084100.azurewebsites.net/api/users/UpdateloveDay`,
             method: 'patch',
             data: formData,
             headers: {
@@ -138,7 +138,7 @@ export function requestEditBirthday(birthday) {
             type: EDIT_BIRTHDAY_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.104:3000/api/users/EditBirthday`,
+            url: `https://notelovesserver20191224084100.azurewebsites.net/api/users/EditBirthday`,
             method: 'patch',
             data: formData,
             headers: {
@@ -165,7 +165,7 @@ export function requestAddUsers(email, password, viewName, birthday) {
             type: ADD_USERS_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.104:3000/api/users`,
+            url: `https://notelovesserver20191224084100.azurewebsites.net/api/users`,
             method: 'post',
             data: {
                 email: email,
@@ -229,7 +229,7 @@ export function requestUpdateAvatarUsers(image) {
             type: UPDATE_AVATAR_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.104:3000/api/Avatar/updated`,
+            url: `https://notelovesserver20191224084100.azurewebsites.net/api/Avatar/updated`,
             method: 'post',
             data: formData,
             headers: {
@@ -256,7 +256,7 @@ export function requestGetAvatarPartner() {
             type: GET_AVATAR_PARTNER_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.104:3000/api/partner/avatar`,
+            url: `https://notelovesserver20191224084100.azurewebsites.net/api/partner/avatar`,
             method: 'get'
         },
         ).then(res => {
@@ -279,7 +279,7 @@ export function requestGetNamePartner() {
             type: GET_NAME_PARTNER_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.104:3000/api/partner/name`,
+            url: `https://notelovesserver20191224084100.azurewebsites.net/api/partner/name`,
             method: 'get'
         },
         ).then(res => {
@@ -312,7 +312,7 @@ export function requestUpdateAvatarPartner(image) {
             type: UPDATE_AVATAR_PARTNER_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.104:3000/api/partner/change-avatar`,
+            url: `https://notelovesserver20191224084100.azurewebsites.net/api/partner/change-avatar`,
             method: 'post',
             data: formData,
             headers: {
@@ -343,7 +343,7 @@ export function requestUpdateNamePartner(name) {
             type: EDIT_NAME_PARTNER_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.104:3000/api/partner/change-name`,
+            url: `https://notelovesserver20191224084100.azurewebsites.net/api/partner/change-name`,
             method: 'patch',
             data: formData,
             headers: {
@@ -370,7 +370,7 @@ export function requestGetNotification() {
             type: GET_NOTIFICATION_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.104:3000/api/notification`,
+            url: `https://notelovesserver20191224084100.azurewebsites.net/api/notification`,
             method: 'get'
         },
         ).then(res => {
@@ -397,7 +397,7 @@ export function requestSendSyncCode(syncCode) {
             type: CREATE_NOTIFICATION_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.104:3000/api/notification`,
+            url: `https://notelovesserver20191224084100.azurewebsites.net/api/notification`,
             method: 'post',
             data: formData,
             headers: {
@@ -427,7 +427,7 @@ export function requestActivedSyncCode(id) {
             type: ACTIVED_SYNCCODE_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.104:3000/api/notification/actived`,
+            url: `https://notelovesserver20191224084100.azurewebsites.net/api/notification/actived`,
             method: 'post',
             data: formData,
             headers: {
@@ -457,7 +457,7 @@ export function requestDenySyncCode(id) {
             type: DENY_SYNCCODE_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.104:3000/api/notification/deny`,
+            url: `https://notelovesserver20191224084100.azurewebsites.net/api/notification/deny`,
             method: 'post',
             data: formData,
             headers: {
@@ -488,7 +488,7 @@ export function requestCancelSyncCode(partnerID) {
             type: CANCEL_SYNCCODE_REQUEST
         })
         return axios.request({
-            url: `http://192.168.37.104:3000/api/notification/cancelSync`,
+            url: `https://notelovesserver20191224084100.azurewebsites.net/api/notification/cancelSync`,
             method: 'post',
             data: formData,
             headers: {
