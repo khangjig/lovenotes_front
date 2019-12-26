@@ -5,6 +5,7 @@ import moment from 'moment'
 
 import Toast from '../components/ToastComponent'
 import { Fonts, Colors } from '../styles/App'
+import { validateEmail } from '../helpers/validateEmail'
 
 
 class RegisterView extends Component {
@@ -49,7 +50,17 @@ class RegisterView extends Component {
         }
         else {
             if (this.state.password === this.state.rePassword) {
-                this.props.submitFrom(this.state.email, this.state.password, this.state.viewName, this.state.birthday)
+                if (validateEmail(this.state.email)) {
+                    this.props.submitFrom(this.state.email, this.state.password, this.state.viewName, this.state.birthday)
+                }
+                else {
+                    this.setState({
+                        visible: true,
+                        message: 'The email not in a valid format!'
+                    }, () => {
+                        this.hideToast()
+                    })
+                }
             }
             else {
                 this.setState({

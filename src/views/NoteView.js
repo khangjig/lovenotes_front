@@ -10,7 +10,7 @@ class NoteView extends Component {
 
     deleteNote = (id) => {
         Alert.alert(
-            'Alert' + id,
+            'Delete',
             'Do you want detele it ?',
             [
                 {

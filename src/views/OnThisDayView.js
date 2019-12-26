@@ -108,7 +108,7 @@ class OnThisDayView extends Component {
                                                 this.props.listNoteByWeek.map(e =>
                                                     <ListItem key={e.id} avatar onPress={() => this.props.navigation.navigate('ShowNotes', { itemId: e.id, otherParam: convertTitle(e.title) })}>
                                                         <Left>
-                                                            <Thumbnail style={{ width: 50, height: 50 }} square source={require('../assets/images/travel3.jpg')} />
+                                                            <Thumbnail style={{ width: 50, height: 50 }} square source={{ uri: 'data:image/png;base64,' + e.firstImage }} />
                                                         </Left>
                                                         <Body>
                                                             <Text style={{ fontFamily: Fonts.fiolexGirl, fontSize: 18 }}>{convertTitle(e.title)}</Text>
