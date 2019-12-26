@@ -31,7 +31,7 @@ class NoteView extends Component {
     render() {
         return (
             <Container>
-                <ScrollView onScroll={this.loadEnd}>
+                <ScrollView onMomentumScrollEnd={this.loadEnd}>
                     {
                         this.props.isLoadingGetListNote ?
                             <View style={{ padding: '50%', alignSelf: 'center', justifyContent: 'center' }}>
@@ -62,7 +62,6 @@ class NoteView extends Component {
                                             </View> :
                                             <View key={e.id}>
                                                 <ListItem avatar
-                                                    onLongPress={() => this.deleteNote(e.id)}
                                                     onPress={() => this.props.navigation.navigate('ShowNotes', { itemId: e.id, otherParam: convertTitle(e.title) })}>
                                                     <Left>
                                                         <View style={{ width: 52, height: 52, borderWidth: 1, borderColor: Colors.mainColor, padding: 1, alignContent: 'center', justifyContent: 'center' }}>

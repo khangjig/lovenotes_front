@@ -406,11 +406,13 @@ export function requestSendSyncCode(syncCode) {
         },
         ).then(res => {
             dispatch({
+                payload: res.data.messages,
                 type: CREATE_NOTIFICATION_SUCCESS
             })
         }).catch(err => {
             console.log(err)
             dispatch({
+                payload: 'Can not find the user!',
                 type: CREATE_NOTIFICATION_FAIL
             })
         })

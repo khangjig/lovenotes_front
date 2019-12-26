@@ -42,7 +42,7 @@ class CountView extends Component {
         if (days > 1000)
             return 'Truly Love'
         else if (days > 500)
-            return 'Intense Love'
+            return 'IntenseLove'
         else if (days > 30)
             return 'Loving... '
         else if (days <= 30)

@@ -260,11 +260,13 @@ const userReducer = (state = initialState, action) => {
         case CREATE_NOTIFICATION_SUCCESS:
             return {
                 ...state,
+                message: action.payload,
                 isLoadingCreateNotificaton: false
             }
         case CREATE_NOTIFICATION_FAIL:
             return {
                 ...state,
+                message: action.payload,
                 isLoadingCreateNotificaton: false
             }
         //actived synccode

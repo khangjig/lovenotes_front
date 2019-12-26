@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import { View } from 'react-native'
 import { connect } from 'react-redux'
 import { Right } from 'native-base'
 
 import { Fonts, Colors } from '../styles/App'
+import Toast from '../components/ToastComponent'
 import UserView from '../views/UserView'
 import {
   requestGetUsers,
@@ -45,6 +47,19 @@ class UserContainer extends Component {
     }
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      visible: false
+    }
+  }
+
+  hideToast = () => {
+    this.setState({
+      visible: false
+    })
+  }
+
   componentDidMount() {
     this.props.requestGetUsers()
     this.props.requestGetAvatarUsers()
@@ -67,8 +82,11 @@ class UserContainer extends Component {
     this.props.requestEditBirthday(birthday)
   }
 
-  sendSyncCode = (syncCode) => {
-    this.props.requestSendSyncCode(syncCode)
+  sendSyncCode = async (syncCode) => {
+    await this.props.requestSendSyncCode(syncCode)
+    this.setState({
+      visible: true
+    },() => this.hideToast())
   }
 
   activedSyncCode = async (id) => {
@@ -85,20 +103,24 @@ class UserContainer extends Component {
     !this.props.isLoadingCancelSyncCode ? this.props.navigation.navigate('Login') : null
   }
 
+
   render() {
     return (
-      <UserView
-        {...this.props}
-        {...this.state}
-        changeAvatar={(image) => this.changeAvatar(image)}
-        changeUsername={(name) => this.changeUsername(name)}
-        changeLoveDay={(loveday) => this.changeLoveDay(loveday)}
-        changeBirthday={(birthday) => this.changeBirthday(birthday)}
-        sendSyncCode={(syncCode) => this.sendSyncCode(syncCode)}
-        activedSyncCode={(id) => this.activedSyncCode(id)}
-        denySyncCode={(id) => this.denySyncCode(id)}
-        cancelSyncCode={(partnerID) => this.cancelSyncCode(partnerID)}
-      />
+      <>
+        <UserView
+          {...this.props}
+          {...this.state}
+          changeAvatar={(image) => this.changeAvatar(image)}
+          changeUsername={(name) => this.changeUsername(name)}
+          changeLoveDay={(loveday) => this.changeLoveDay(loveday)}
+          changeBirthday={(birthday) => this.changeBirthday(birthday)}
+          sendSyncCode={(syncCode) => this.sendSyncCode(syncCode)}
+          activedSyncCode={(id) => this.activedSyncCode(id)}
+          denySyncCode={(id) => this.denySyncCode(id)}
+          cancelSyncCode={(partnerID) => this.cancelSyncCode(partnerID)}
+        />
+        <Toast visible={this.state.visible} message={this.props.message} />
+      </>
     )
   }
 }

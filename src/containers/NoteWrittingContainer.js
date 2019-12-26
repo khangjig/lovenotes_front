@@ -19,9 +19,8 @@ class NoteWrittingContainer extends Component {
   }
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
-    const { params } = navigation.state
     return {
-      title: params ? params.otherParam : 'Writting...',
+      title: 'Writting...',
       headerTintColor: Colors.mainColor,
       headerStyle: {
         backgroundColor: 'white',
